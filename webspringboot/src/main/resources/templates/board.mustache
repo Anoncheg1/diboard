@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>{{boardName}}</title>
+<!-- <base href="/" > -->
+<link rel="stylesheet" href="/photon.css" type="text/css">
+</head>
+<body>
+	<div class="body">
+		{{hostName}}&nbsp;&nbsp;{{boardName}}
+		<div style="font-size: .9em;">{{{pages}}}</div>
+		<hr />
+
+		{{> formPartial}}
+		<hr />
+		{{#threads}}
+			{{#key}}
+				{{> threadPartial}}
+			{{/key}}
+			{{#value}}
+				{{> replayPartial}}
+			{{/value}}
+		<hr />
+		{{/threads}}
+
+	</div>
+</body>
+</html>

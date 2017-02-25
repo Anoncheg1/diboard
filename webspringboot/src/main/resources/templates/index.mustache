@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ImageBoard</title>
+<link rel="stylesheet" href="photon.css" type="text/css">
+</head>
+<body>
+<div class="body">
+	<div id="index-top">
+		{{#boards_names}}
+ 			<a href="/{{toString}}/0">{{toString}}</a> / 
+		{{/boards_names}}
+	</div>
+<hr/>
+<p>{{message}}</p>
+	{{#groups_network}}
+ 		<br>{{toString}} 
+	{{/groups_network}}
+
+
+</div>
+
+</body>
+</html>

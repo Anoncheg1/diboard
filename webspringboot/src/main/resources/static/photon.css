@@ -1,0 +1,163 @@
+@charset "utf-8";
+
+body {
+	color: #333;
+	background-color: #FFFFEE;
+}
+
+.body {
+	max-width: 980px;
+	padding: 0;
+	margin: 0 auto;
+}
+
+a, .likelink {
+	color: #f60;
+}
+
+a:hover, .likelink:hover {
+	color: #06f;
+}
+
+.likelink {
+	border-bottom-color: #f60;
+}
+
+.likelink:hover {
+	border-bottom-color: #06f;
+}
+
+.show-moar:hover .likelink {
+	color: #06f;
+	border-bottom-color: #06f;
+}
+
+h2, h3 {
+	background-color: #ddd;
+}
+
+h2 {
+	border: 1px solid #ccc;
+}
+
+hr {
+	border-color: #bbb;
+}
+
+
+.subject {
+	color: #CC1105;
+	font-size: 1.2em;
+}
+
+.name{
+	color: #117743;
+}
+
+img.thumbnail {
+	background: #FFFFFF;
+	max-width: 300px;
+	max-height: 300px;
+}
+
+.attachments {
+	float: left;
+	margin: 1px;
+}
+
+.thread {
+	width: 980px;
+	padding: 5px 5px;
+}
+
+hr {
+	clear: both;
+	height: 1px;
+	margin: 1px;
+}
+
+.replay {
+	margin-bottom: 5px;
+	border-collapse: collapse;
+}
+.replay-body{
+	background: #F0E0D6;
+}
+.rep-p{
+padding: 2px 5px;
+}
+.doubledash {
+	vertical-align: top;
+	clear: both;
+}
+
+.message{
+vertical-align: top;
+}
+
+
+
+
+
+
+.warn {
+	border-color: #f66;
+	background-color: #f9eee0;
+}
+
+.reply, .lst_rpl {
+	background-color: #ddd;
+}
+
+.reflink a {
+	color: #333;
+}
+
+.pstcnt {
+	color: #789922;
+}
+
+.hand:hover {
+	background-color: #e3e3e3;
+}
+
+.img_size, .img_size-big, .thrd-thumb {
+	color: gray;
+}
+
+.spoiler {
+	background-color: #bbb;
+	color: #bbb;
+}
+
+.spoiler:hover {
+	color: #333;
+}
+
+.unkfunc {
+	color: #789922;
+}
+
+.postertrip {
+	color: #228854;
+}
+
+.pale, .bmenu {
+	color: gray;
+}
+
+.good {
+	color: green;
+}
+
+.sage {
+	color: red;
+}
+
+.mod {
+	color: #26a;
+}
+
+.adm {
+	color: #800080;
+}
