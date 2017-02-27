@@ -1,9 +1,12 @@
-`peers.conf`
+Config files:
 
+`peers.conf`
 `groups.conf`
 
+feeding, peering are synonyms
 
 Requirements:
+---------
 
 * groups.conf must declare peers lists per group in format (where '|' is a separating symbol):
 host.com|sdg2123.onion|asdasdjlk.i2p|127.0.0.5
@@ -12,6 +15,7 @@ host.com|sdg2123.onion|asdasdjlk.i2p|127.0.0.5
 
 
 Recomendations:
+---------
 
 * Public list of peers per group at the main page. Strongly recommended.
 * Watch for changes of that list at your peers.
@@ -39,7 +43,7 @@ Peering with TLS
 - yourhost.crt file is your public certificate
 - SelfKeyStore file keeps your private key
 
-If you need to regenerate new public certificate just delete yourhost.crt and SelfKeyStore files.
+To regenerate new public certificate just delete yourhost.crt and SelfKeyStore files.
 
 ###Peering over Tor
 
@@ -57,4 +61,4 @@ restart/reload tor then
 
     cat /var/lib/tor/nntp_feed/hostname
 
-This is your in feed address
+This is your feed address
