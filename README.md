@@ -51,14 +51,14 @@ iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 119 -j REDIRECT --to-port 
 
 Features:
 ----------
+- No JavaScript.
 - Short links works globally
 - No message loss, full synchronization.
 - Fully compatible with nntpchan soft (except tripcodes, AUTH command, decentralized moderation).
-- Only images supported for now.
-- One attachment per post.
-- SOCKS proxy connection for Tor and i2p peering
+- Only images supported for now. One attachment per post.
+- SOCKS proxy connection for Tor and i2p peering.
 
-Knews bugs:
+Knews issues:
 ----------
 - Impossible to chage HTML templates without recompilation.
 - HEAD and BODY NNTP commands do not read NNTPcache.
@@ -69,16 +69,12 @@ Knews bugs:
 - MIME implemented partially.
 - HTTP proxy not supported.
 
-Used libraries with licenses(dibd):
-----------
-- javax.mail GPL2
-- org.im4java LGPL
-- Java JDBC 4.2 (JRE 8+) driver for PostgreSQL database. PostgreSQL License
-
 TODO:
 ----------
-1. create new web-frontend with HTML cache
-2. make separate implementation of pull and push for fast flow.
+1. Check "pull missing threads" if response is not thread there is will be loop and overflow.
+2. create new web-frontend with HTML cache
+3. unit test for TLS
+4. make separate implementation of pull and push for fast flow.
 
 For nntpchan:
 ----------

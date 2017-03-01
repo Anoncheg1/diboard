@@ -17,13 +17,14 @@ host.com|sdg2123.onion|asdasdjlk.i2p|127.0.0.5
 Recomendations:
 ---------
 
-* Public list of peers per group at the main page. Strongly recommended.
-* Watch for changes of that list at your peers.
-* Do not join to too large list of peers.
-* You must monitor every group of peers.
-* If something go wrong in group all that you can do is accept it or disconnect from whole list.
-* Do not change id in groups.conf ever. Do not change group name if you have peers.
 * Be especially carefull with writing peerhost names in peers.conf and groups.conf. If you made mistake in hostnames there is no warning message for it.
+* Do not change id in groups.conf ever. Do not change group name if you have peers.
+* Public list of peers per group/board at the main page. Strongly recommended.
+* Watch for changes of that list at your peers.
+* You must monitor every group of peers.
+* Do not join to too large list of peers (group/board).
+* If something go wrong in group all that you can do is accept it or disconnect from whole list (group/board).
+* Time at your host should not differ by the perceived user value.
 
 **peers per groups - groups.conf MUST be public**
 
