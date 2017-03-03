@@ -63,7 +63,8 @@ public class ArticleWeb extends Article{
 	 * @return String
 	 */
 	public String getPost_time_web() {
-		Date d = new Date(super.getPost_time()*1000);
+		//long constructor
+		Date d = new Date(super.getPost_time() * 1000);
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(d);
 	}
 

@@ -53,7 +53,7 @@ Features:
 ----------
 - No JavaScript.
 - Short links works globally
-- No message loss, full synchronization.
+- No message loss.
 - Fully compatible with nntpchan soft (except tripcodes, AUTH command, decentralized moderation).
 - Only images supported for now. One attachment per post.
 - SOCKS proxy connection for Tor and i2p peering.
@@ -71,10 +71,9 @@ Knews issues:
 
 TODO:
 ----------
-1. Check "pull missing threads" if response is not thread there is will be loop and overflow.
-2. create new web-frontend with HTML cache
-3. unit test for TLS
-4. make separate implementation of pull and push for fast flow.
+1. create new web-frontend with HTML cache
+2. unit test for TLS
+3. make separate implementation of pull and push for fast flow.
 
 For nntpchan:
 ----------

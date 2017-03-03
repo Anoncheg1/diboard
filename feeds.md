@@ -11,7 +11,7 @@ Requirements:
 * groups.conf must declare peers lists per group in format (where '|' is a separating symbol):
 host.com|sdg2123.onion|asdasdjlk.i2p|127.0.0.5
 * At least one of the peers in list must be declared in peers.conf
-* sonews.peering=true
+* dibd.peering=true
 
 
 Recomendations:
@@ -21,7 +21,7 @@ Recomendations:
 * Do not change id in groups.conf ever. Do not change group name if you have peers.
 * Public list of peers per group/board at the main page. Strongly recommended.
 * Watch for changes of that list at your peers.
-* You must monitor every group of peers.
+* You should monitor every group of peers.
 * Do not join to too large list of peers (group/board).
 * If something go wrong in group all that you can do is accept it or disconnect from whole list (group/board).
 * Time at your host should not differ by the perceived user value.
@@ -35,7 +35,6 @@ Possible errors/warning in net of peers:
 * max posts per thread have different limit
 * hostname/groupname was changed inside peer
 * spoofing and spamming
-* nntpchan errors
 
 Peering with TLS
 ----------
