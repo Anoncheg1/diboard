@@ -69,17 +69,16 @@ public class ThreadController {
 			|| (subject.length() == 0 && file.getSize() == 0)) {
 			errorM = "Don't flood please.";
 
-		} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
-			errorM = "Wrong file format!";
-
-			// внутри проверяет на повторную отправку и создаёт тред
+		//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
+			//errorM = "Wrong file format!";
+			
 		} else {
 			if (file.getSize() == 0)
 				file = null;
 			
 			if (service.createArticle(null, boardName, boardId, name,
 					subject, message, file) == 0) { //we do not escape html at input
-				errorM = "Thread already exist!";
+				errorM = "Thread already exist or another error.";
 			}
 		}
 		
@@ -143,17 +142,16 @@ public class ThreadController {
 			}else if (message.length() == 0 && ( subject.length() == 0 || file.getSize() == 0  )) {
 				errorM = "Don't flood please.";
 
-			} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
-				errorM = "Wrong file format!";
+			//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
+				//errorM = "Wrong file format!";
 
-				// внутри проверяет на повторную отправку и создаёт ответ
 			} else {
 				if (file.getSize() == 0)
 					file = null;
 				id = service.createArticle(threadId, boardName, boardId, name,
 						subject, message, file); //we do not escape html at input
 				if (id == 0) {
-					errorM = "Replay already exist!";
+					errorM = "Replay already exist or another error.";
 				}
 			}
 		}
@@ -191,7 +189,7 @@ public class ThreadController {
 
 		// header
 		model.put("boardName", boardName);
-		model.put("hostName", Config.inst().get(Config.HOSTNAME, "localhost"));
+		model.put("hostName", Config.inst().get(Config.HOSTNAME, null));
 		// form
 		model.put("post_url", "/post/" + boardName + "/thread-" + threadId_hex);
 		model.put("reference", "");

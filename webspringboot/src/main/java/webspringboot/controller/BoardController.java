@@ -78,7 +78,6 @@ public class BoardController {
 			count = service.getThreadsCount(boardName);
 		} catch (NoSuchFieldException e) {
 			Log.get().log(Level.INFO, "BoardController.getBoardIndex() at getThreads() failed: {0}", e);
-			System.out.println("weha are here");
 			return "redirect:pages/errorPage404";
 		}
 		if (count != 0) {

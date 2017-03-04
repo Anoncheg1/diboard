@@ -54,7 +54,7 @@ public class ArticleWeb extends Article{
 	}
 
 	public String getId_hex() {
-		return String.format("%X", super.getId());
+		return String.format("%X", super.a.id);
 	}
 
 	/**
@@ -63,20 +63,20 @@ public class ArticleWeb extends Article{
 	 * @return String
 	 */
 	public String getPost_time_web() {
-		//long constructor
-		Date d = new Date(super.getPost_time() * 1000);
+		Date d = new Date(super.a.post_time * 1000);
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(d);
 	}
 
 	public String getAttachment() {
-		String fileName = super.getFileName();
+		String fileName = super.a.fileName;
 		//System.out.println(fileName + super.getGroupName());
-		if(fileName == null || super.getGroupName() == null)
+		assert(super.a.groupName != null);
+		if(fileName == null)
 			return "<td></td>";
 		else{
-			return "<td class=\"attachments\" ><a href=\"/img/"+super.getGroupName()+"/"+fileName
+			return "<td class=\"attachments\" ><a href=\"/img/"+super.a.groupName+"/"+fileName
 					+"\" title=\""+ fileName +"\" target=\"_blank\"><img src=\"/thm/"
-					+super.getGroupName()+"/"+StorageManager.attachments.checkSupported(fileName)
+					+super.a.groupName+"/"+StorageManager.attachments.checkSupported(fileName)
 					+"\" alt=\""+StorageManager.attachments.checkSupported(fileName)+"\" class=\"thumbnail\"/></a></td>";
 		}
 

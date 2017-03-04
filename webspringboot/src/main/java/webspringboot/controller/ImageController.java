@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.connector.ClientAbortException;
-import dibd.config.Config;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,16 +23,19 @@ import webspringboot.service.CaptchaSession;
 @RestController
 public class ImageController {
 	
-	@RequestMapping("/{what:[a-z]*}/{boardName}/{fileName}.{ext}")
+	@RequestMapping("/{what:[a-z]{3}}/{boardName}/{fileName:.+}")
 	public void file(HttpServletRequest req, HttpServletResponse resp, 
-			@PathVariable final String what, @PathVariable final String boardName, @PathVariable final String fileName, @PathVariable final String ext) {
+			@PathVariable final String what, @PathVariable final String boardName, @PathVariable final String fileName) {
 		//File ofile = new File(Config.inst().get(Config.ATTACHMENTSPATH, "attachments/") + boardName + "/"+what+"/" + fileName+"."+ext);
-		File ofile = new File("attachments/" + boardName + "/"+what+"/" + fileName+"."+ext);
+		File ofile = new File("attachments/" + boardName + "/"+what+"/" + fileName);
 		if(ofile.exists()){
 			try {
 				FileInputStream fos = new FileInputStream (ofile);
 				
 			    try {
+			    	if (what.equals("img") && 
+			    			! new File("attachments/" + boardName + "/"+"thm"+"/" + fileName).exists())
+			    		resp.setContentType("dont/open");
 			    	OutputStream or = resp.getOutputStream();
 			    	//BufferedOutputStream bo = new BufferedOutputStream(resp.getOutputStream());
 			    	byte[] bs = new byte[100];

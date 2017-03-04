@@ -53,7 +53,7 @@ ALTER TABLE thread ADD CONSTRAINT Unique_Identifier2 PRIMARY KEY (thread_id)
 CREATE TABLE attachment(
  article_id Int NOT NULL,
  file_path Character varying(256) NOT NULL,
- media_type Character varying(256) NOT NULL
+ media_type Character varying(256)
 )
 ;
 

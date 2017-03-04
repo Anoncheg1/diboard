@@ -198,7 +198,16 @@ public class BoardThreadService {
 			String s = null;
 			if(file != null){
 				b = file.getBytes();
+				// filename = id + . + content type
+				//if content type is not detected we use .xxx in file name or filename = id 
 				s = file.getContentType();
+				if(s.equalsIgnoreCase("application/octet-stream")){ //content is unknewn
+					String[] a =file.getName().split("[.]");
+					if (a.length == 2)
+						s = "unknewn/"+a[2];
+					else
+						s = null;
+				}
 			}
 			
 			Article article;
