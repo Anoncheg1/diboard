@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+
+import dibd.util.Log;
+import webspringboot.Application;
+
 /**
  * Captcha Generator.
  */
@@ -73,7 +78,7 @@ public class CaptchaGen {
                 do{
                 	fnum = (int) (Math.random() * fonts.length);
                 }while(badfonts.contains(fonts[fnum])|| fonts[fnum].startsWith("STIX")||fonts[fnum].startsWith("MathJax"));
-                System.out.println(fnum+" "+fonts[fnum]);
+                System.out.println("Capcha font:"+fnum+" "+fonts[fnum]);
                 g.setFont(new Font(fonts[fnum], Font.BOLD, size));
 
                 int inc = x / (n + 2);

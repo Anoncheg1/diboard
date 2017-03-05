@@ -40,7 +40,7 @@ public class ArticleWeb extends Article{
 		if (super.a.message == null)
 			super.a.message = "";
 		else{
-			super.a.message = HtmlUtils.htmlEscape(super.a.message); // IMPORTANT
+			super.a.message = HtmlUtils.htmlEscape(super.a.message); // IMPORTANT for security
 			//System.out.println(HtmlUtils.htmlEscape("<as.ggd@ho-st.com>"));
 			
 			for(Map.Entry<String, WebRef> ref : refs.entrySet()){
@@ -50,6 +50,9 @@ public class ArticleWeb extends Article{
 
 				super.a.message = super.a.message.replace(HtmlUtils.htmlEscape(ref.getKey()), refW);
 			}
+			
+			//new lines to HTML
+			super.a.message = super.a.message.replaceAll("\n", "<br />");
 		}
 	}
 
@@ -87,5 +90,4 @@ public class ArticleWeb extends Article{
 		return "thread-"+String.format("%X", super.getThread_id());
 	}
 	
-	//public String getMessage() - must be escaped!!!
 }

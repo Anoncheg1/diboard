@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Level;
 
 import dibd.config.Config;
@@ -40,7 +39,7 @@ public class BoardController {
 	@RequestMapping("/")
 	public String index(Map<String, Object> model) {
 		model.put("boards_names", StorageManager.groups.getAllNames());
-		model.put("message", "Groups network:");
+		model.put("message", "Welcome to diboard "+dibd.App.VERSION+".<br /><br />Networking groups here:");
 		
 		List<String> groups= new ArrayList<>();
 		for(Group g : StorageManager.groups.getAll()){

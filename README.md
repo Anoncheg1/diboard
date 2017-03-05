@@ -2,7 +2,7 @@
 
 To clone use: ```$ git clone --recursive```
 
-Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
+diboard v1.0.1testing Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
 -----
 - scientific research on this topic
 - main goal of project is a quality of code
