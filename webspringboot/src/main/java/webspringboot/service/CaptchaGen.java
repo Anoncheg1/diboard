@@ -78,7 +78,7 @@ public class CaptchaGen {
                 do{
                 	fnum = (int) (Math.random() * fonts.length);
                 }while(badfonts.contains(fonts[fnum])|| fonts[fnum].startsWith("STIX")||fonts[fnum].startsWith("MathJax"));
-                System.out.println("Capcha font:"+fnum+" "+fonts[fnum]);
+                Log.get().finest("Capcha font:"+fnum+" "+fonts[fnum]);
                 g.setFont(new Font(fonts[fnum], Font.BOLD, size));
 
                 int inc = x / (n + 2);

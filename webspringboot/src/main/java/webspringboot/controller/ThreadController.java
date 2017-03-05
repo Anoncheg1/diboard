@@ -51,7 +51,7 @@ public class ThreadController {
 		} catch (NoSuchFieldException e) {
 			return "pages/errorPage404";
 		}
-System.out.println(message);
+
 		String errorM = null;
 
 		String solution = CaptchaSession.get(prefix); //prefix = session
