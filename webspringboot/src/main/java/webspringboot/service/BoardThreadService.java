@@ -195,26 +195,31 @@ public class BoardThreadService {
 					boardId, boardName);//, short_ref_messageId);
 
 			byte[] b = null;
-			String s = null;
+			String ct = null;
+			String fname = null;
 			if(file != null){
 				b = file.getBytes();
+				//1) we check .xxx part in file name if such is not exist
+				//we use  getContentType()
+				
 				// filename = id + . + content type
 				//if content type is not detected we use .xxx in file name or filename = id 
-				s = file.getContentType();
-				if(s.equalsIgnoreCase("application/octet-stream")){ //content is unknewn
-					String[] a =file.getName().split("[.]");
+				ct = file.getContentType();
+				fname = file.getName();
+				//if(s.equalsIgnoreCase("application/octet-stream")){ //content is unknewn
+					/*String[] a =file.getName().split("[.]");
 					if (a.length == 2)
 						s = "unknewn/"+a[2];
 					else
 						s = null;
-				}
+				}*/
 			}
 			
 			Article article;
 			if(threadId == null)
-				article = db.createThreadWeb(art, b, s);
+				article = db.createThreadWeb(art, b, ct, fname);
 			else
-				article = db.createReplayWeb(art, b, s);
+				article = db.createReplayWeb(art, b, ct, fname);
 
 			if (article == null) //exist
 				return 0;

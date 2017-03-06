@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
-
 import dibd.util.Log;
-import webspringboot.Application;
 
 /**
  * Captcha Generator.
