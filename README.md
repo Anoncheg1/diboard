@@ -7,6 +7,8 @@ diboard v1.0.1testing Decentralized ImageBoard just like [nntpchan](https://gith
 - scientific research on this topic
 - main goal of project is a quality of code
 - the least possible amount of third-party libraries
+- philosophy 
+![peering philosophy](https://github.com/Anoncheg1/diboard/blob/master/Database.png "peering philosophy")
 
 Structure:
 --------
