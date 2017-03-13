@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import dibd.config.Config;
 import dibd.daemon.NNTPConnection;
 import dibd.feed.PushDaemon;
+import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageBackendException;
 import dibd.storage.StorageManager;
 import dibd.storage.article.Article;
@@ -66,10 +67,11 @@ public class BoardThreadService {
 	 * @throws NoSuchFieldException if not exist
 	 */
 	public int getBoardIdByName(String boardName) throws NoSuchFieldException {
-		Integer ret = StorageManager.groups.get(boardName).getInternalID();
-		if(ret == 0)
+		Group g = StorageManager.groups.get(boardName);
+		if(g != null)
+			return g.getInternalID();
+		else
 			throw new NoSuchFieldException();
-		return ret;
 	}
 /*
 	public String getBoardNameById(Integer id){ 
