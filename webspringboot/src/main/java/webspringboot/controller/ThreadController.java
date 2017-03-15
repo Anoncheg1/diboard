@@ -111,10 +111,13 @@ public class ThreadController {
 		String errorM = null;
 		int id = 0;
 		
-		//Check replays count
-		if (service.getReplaysCount(threadId) >
+		//Check rLeft count
+		int count = service.getReplaysCount(threadId);
+		if (count == -1)
+			return "pages/errorPage404";
+		else if (service.getReplaysCount(threadId) >
 		Config.inst().get(Config.MAX_REPLAYS, 500))
-			errorM = "Thread has reached replays limit.";
+			errorM = "Thread has reached rLeft limit.";
 		else{
 
 			String solution = CaptchaSession.get(prefix); //prefix = session
@@ -204,7 +207,7 @@ public class ThreadController {
 		model.put("replays", t);
 		
 		if (t.size() > Config.inst().get(Config.MAX_REPLAYS, 500))
-			model.put("error", new Capsule("Thread has reached replays limit."));
+			model.put("error", new Capsule("Thread has reached rLeft limit."));
 
 		return "thread";
 	}

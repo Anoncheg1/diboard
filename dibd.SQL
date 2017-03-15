@@ -14,12 +14,13 @@ CREATE TABLE article(
  thread_id Int,
  message_id Character varying(256) NOT NULL,
  message_id_host Character varying(128) NOT NULL,
- hash int,
+ hash Int,
  a_name Character varying(256),
  subject Character varying(256),
  message Text,
  post_time Bigint NOT NULL,
  path_header Character varying(1000),
+ hidden Int,
  UNIQUE (message_id)
 )
 ;

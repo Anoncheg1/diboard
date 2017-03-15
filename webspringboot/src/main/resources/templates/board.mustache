@@ -17,7 +17,12 @@
 		<hr />
 		{{#threads}}
 			{{#key}}
-				{{> threadPartial}}
+				{{#thread}}
+					{{> threadPartial}}
+				{{/thread}}
+				{{#rLeft}}
+					replays not shown: {{intValue}}
+				{{/rLeft}}
 			{{/key}}
 			{{#value}}
 				{{> replayPartial}}

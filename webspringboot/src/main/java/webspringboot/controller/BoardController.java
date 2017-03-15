@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 
 import dibd.config.Config;
 import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageManager;
+import dibd.storage.web.ThRLeft;
 import dibd.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,10 +62,11 @@ public class BoardController {
 		return "index";
 	}
 
+	//show board
 	@RequestMapping(value = "/{boardName}/{boardPage:[0-9]?}")
 	public String getBoard(@PathVariable String boardName, @PathVariable int boardPage, Map<String, Object> model) {
 		//System.out.println("c"+Thread.currentThread().getId());
-		Set<Map.Entry<ArticleWeb, List<ArticleWeb>>> te = null;
+		Set<Entry<ThRLeft<ArticleWeb>, List<ArticleWeb>>> the = null;
 		// Page and boardName check
 		int count = 0; //количество thread
 		int pagesCount = 0;
@@ -81,6 +84,7 @@ public class BoardController {
 		}
 		if (count != 0) {
 			int tpp= Config.inst().get(Config.THREADS_PER_PAGE, 5);
+			//count=1-... , pagesCount=0....
 			pagesCount = count / tpp - (count % tpp == 0 ? 1 : 0);
 			
 			if (boardPage > pagesCount)
@@ -89,9 +93,9 @@ public class BoardController {
 			// Get threads
 				try {
 					//System.out.println(boardName+ boardPage);
-					Map<ArticleWeb, List<ArticleWeb>> t = service.getThreads(boardName, boardPage);
-					if(t != null)
-							te = t.entrySet();
+					Map<ThRLeft<ArticleWeb>, List<ArticleWeb>> th = service.getThreads(boardName, boardPage);
+					if(th != null)
+							the = th.entrySet();
 				} catch (NoSuchFieldException e) {
 					Log.get().log(Level.INFO, "BoardController.getBoardIndex() at getThreads() failed: {0}", e);
 					return "redirect:pages/errorPage404";
@@ -115,7 +119,7 @@ public class BoardController {
 		model.put("files", true);
 		model.put("prefix", CaptchaSession.generate());
 
-		model.put("threads", te);
+		model.put("threads", the);
 		return "board";
 	}
 

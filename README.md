@@ -64,7 +64,6 @@ Knews issues:
 ----------
 - Impossible to chage HTML templates without recompilation.
 - HEAD and BODY NNTP commands do not read NNTPcache.
-- nntpchan peer (without newnews command) will slow down performance if your group have pages < pages of nntpchan
 - For TLS: only DNS names in AltNames Subject field supported.
 - It is possible to fake host in message-id and Path.(See "partial threads" in FullDocumentation)
 - It is possible to flood/spam from peers.

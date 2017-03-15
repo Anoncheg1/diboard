@@ -1,0 +1,3 @@
+Thread - is an article with id == thread_id.
+
+Local uncached article - is an article with: message_id_host equal to Config.inst().get(Config.HOSTNAME, null)

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ import dibd.storage.article.Article;
 import dibd.storage.impl.JDBCDatabase;
 import dibd.storage.web.ShortRefParser;
 import dibd.storage.web.StorageWeb;
+import dibd.storage.web.ThRLeft;
 import dibd.storage.web.WebRef;
 import dibd.util.Log;
 import org.springframework.stereotype.Component;
@@ -85,15 +87,15 @@ public class BoardThreadService {
 
 	
 	/**
-	 * Get threads with replays
+	 * Get threads with rLeft
 	 * 
 	 * @param boardName
 	 * @param boardPage should be correct.
 	 * @return
 	 * @throws Exception if boardName is wrong
 	 */
-	public Map<ArticleWeb,List<ArticleWeb>> getThreads(String boardName, int boardPage) throws NoSuchFieldException {
-		Map<ArticleWeb,List<ArticleWeb>> ret;
+	public Map<ThRLeft<ArticleWeb>,List<ArticleWeb>> getThreads(String boardName, int boardPage) throws NoSuchFieldException {
+		Map<ThRLeft<ArticleWeb>,List<ArticleWeb>> ret;
 		
 		Integer boardId = StorageManager.groups.get(boardName).getInternalID();
 		if(boardId == 0)
@@ -102,19 +104,22 @@ public class BoardThreadService {
 		StorageWeb db = null;
 		try {
 			db = storageWeb.take();
-			Map<Article,List<Article>> threads = db.getThreads(boardId, boardPage, boardName);
+			Map<ThRLeft<Article>,List<Article>> threads = db.getThreads(boardId, boardPage, boardName);
 
-			ret = new LinkedHashMap<ArticleWeb,List<ArticleWeb>>();
-			for (Map.Entry<Article,List<Article>> entry : threads.entrySet()) {
+			ret = new LinkedHashMap<ThRLeft<ArticleWeb>,List<ArticleWeb>>();
+			for (Entry<ThRLeft<Article>, List<Article>> entry : threads.entrySet()) {
+				//value
 				List<ArticleWeb> replays = new ArrayList<ArticleWeb>();
 				for(Article a: entry.getValue()){
 					Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
 
 					replays.add(new ArticleWeb(a, refs));
 				}
-				Article thread = entry.getKey();
+				//key
+				ThRLeft<Article> key = entry.getKey();
+				Article thread = key.getThread();
 				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, thread.getMessage());
-				ArticleWeb threadW = new ArticleWeb(thread, refs); 
+				ThRLeft<ArticleWeb> threadW = new ThRLeft<ArticleWeb>(new ArticleWeb(thread, refs), key.getRLeft()); 
 				ret.put(threadW, replays);
 			}
 
@@ -255,22 +260,20 @@ public class BoardThreadService {
 	}
 	
 	/**
-	 * Required to make limit of replays.
+	 * Required to make limit of rLeft.
 	 * 
 	 * @param threadId
 	 * @return
 	 */
 	public int getReplaysCount(int threadId){
 		StorageWeb db = null;
-		int count;
+		int count = -1;
 		try {
 			db = storageWeb.take();
 			count = db.getReplaysCount(threadId);
 		} catch (InterruptedException e) {
-			return Integer.MAX_VALUE;
 		} catch (StorageBackendException e) {
 			Log.get().log(Level.SEVERE, "ThreadService.getReplaysCount() failed: {0}", e);
-			return Integer.MAX_VALUE;
 		}finally{try {
 			if (db !=null)
 				storageWeb.put(db);
