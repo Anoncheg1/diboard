@@ -65,15 +65,10 @@ public class BoardThreadService {
 	
 	/**
 	 * @param name String
-	 * @return BoardId
-	 * @throws NoSuchFieldException if not exist
+	 * @return Group may be null
 	 */
-	public int getBoardIdByName(String boardName) throws NoSuchFieldException {
-		Group g = StorageManager.groups.get(boardName);
-		if(g != null)
-			return g.getInternalID();
-		else
-			throw new NoSuchFieldException();
+	public Group getGroup(String boardName){
+		return StorageManager.groups.get(boardName);
 	}
 /*
 	public String getBoardNameById(Integer id){ 
@@ -190,7 +185,7 @@ public class BoardThreadService {
 	 * @param file
 	 * @return 0 if already exist
 	 */
-	public int createArticle(final Integer threadId, final String boardName, final int boardId, 
+	public int createArticle(final Integer threadId, Group group, 
 			String name, final String subject, String message, final MultipartFile file) {
 
 		//Map <String, String> short_ref_messageId = getShortRefs(message);
@@ -198,8 +193,7 @@ public class BoardThreadService {
 		StorageWeb db = null;
 		try {
 			db = storageWeb.take();
-			Article art = new Article(threadId, name, subject, ShortRefParser.getShortRefs(db, message),
-					boardId, boardName);//, short_ref_messageId);
+			Article art = new Article(threadId, name, subject, ShortRefParser.getShortRefs(db, message), group);
 
 			byte[] b = null;
 			String ct = null;
@@ -236,21 +230,23 @@ public class BoardThreadService {
 	}
 	
 
-	public List<ArticleWeb> getOneThread(int threadId, String boardName) throws StorageBackendException{
+	public List<ArticleWeb> getOneThread(int threadId, Group group){
 		List<ArticleWeb> thread = new ArrayList<ArticleWeb>();
 		
 		StorageWeb db = null;
 		try {
 			db = storageWeb.take();
-			List<Article> al = db.getOneThread(threadId, boardName);
-
+			assert(group != null);
+			List<Article> al = db.getOneThread(threadId, group.getName(), 1); //get 1 and 0 status
+			if (al.isEmpty())
+				return new ArrayList<ArticleWeb>(0);
 			
 			for(Article a: al){
 				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
 				thread.add(new ArticleWeb(a, refs));
 			}
-		} catch (InterruptedException e) {
-			return null;
+		} catch (InterruptedException | StorageBackendException e) {
+			return thread;
 		}finally{try {
 			if (db !=null)
 				storageWeb.put(db);

@@ -1,3 +1,22 @@
 Thread - is an article with id == thread_id.
 
 Local uncached article - is an article with: message_id_host equal to Config.inst().get(Config.HOSTNAME, null)
+
+#####  For large attachment  #####
+we block at web
+
+IHAVE TAKETHIS:
+1) we do not save cache and do not push to peers
+2) we save article with article.status = 1 default 0
+3) we do not save attachment file but in base file name "No File(was too large).xxx"
+4) we do not create thumbnail
+
+when delete old thread:
+request only files where article.status = 0, 1 rejected.
+
+when scarp:
+1) request threads with status = 0
+2) request replays with status = 0
+
+when article:
+return only if status = 0

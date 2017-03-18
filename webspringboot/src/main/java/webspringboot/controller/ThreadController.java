@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import dibd.config.Config;
+import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageBackendException;
 import dibd.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +45,10 @@ public class ThreadController {
 			@RequestParam(value = "attachment", required = false) MultipartFile file,
 			@RequestParam("session") String prefix,
 			@RequestParam("captcha") String captcha, RedirectAttributes redirectAttrs) {
-		// проверка существования такой группы
-		int boardId;
-		try {
-			boardId = service.getBoardIdByName(boardName);
-		} catch (NoSuchFieldException e) {
-			return "pages/errorPage404";
-		}
+		// check boardname
+		Group group = service.getGroup(boardName);
+		if(group == null)
+			return "redirect:pages/errorPage404";
 
 		String errorM = null;
 
@@ -71,12 +69,13 @@ public class ThreadController {
 
 		//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
 			//errorM = "Wrong file format!";
-			
+		} else if(file != null && file.getSize() > Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024){
+			errorM = "Your file is arger than limit "+Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024+" MB.";
 		} else {
 			if (file.getSize() == 0)
 				file = null;
 			
-			if (service.createArticle(null, boardName, boardId, name,
+			if (service.createArticle(null, group, name,
 					subject, message, file) == 0) { //we do not escape html at input
 				errorM = "Thread already exist or another error.";
 			}
@@ -101,12 +100,10 @@ public class ThreadController {
 			RedirectAttributes redirectAttrs) {
 		int threadId = Integer.parseInt(threadId_hex, 16);
 		// проверка существования такой группы
-		int boardId;
-		try {
-			boardId = service.getBoardIdByName(boardName);
-		} catch (NoSuchFieldException e) {
-			return "pages/errorPage404";
-		}
+		// check boardname
+		Group group = service.getGroup(boardName);
+		if(group == null)
+			return "redirect:pages/errorPage404";
 
 		String errorM = null;
 		int id = 0;
@@ -117,7 +114,7 @@ public class ThreadController {
 			return "pages/errorPage404";
 		else if (service.getReplaysCount(threadId) >
 		Config.inst().get(Config.MAX_REPLAYS, 500))
-			errorM = "Thread has reached rLeft limit.";
+			errorM = "Thread has reached replays limit.";
 		else{
 
 			String solution = CaptchaSession.get(prefix); //prefix = session
@@ -148,10 +145,12 @@ public class ThreadController {
 			//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
 				//errorM = "Wrong file format!";
 
-			} else {
-				if (file.getSize() == 0)
+			} else if(file != null && file.getSize() > Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024){
+				errorM = "Your file is arger than limit "+Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024+" MB.";
+			} else{
+				if (file != null && file.getSize() == 0)
 					file = null;
-				id = service.createArticle(threadId, boardName, boardId, name,
+				id = service.createArticle(threadId, group, name,
 						subject, message, file); //we do not escape html at input
 				if (id == 0) {
 					errorM = "Replay already exist or another error.";
@@ -175,17 +174,14 @@ public class ThreadController {
 			Map<String, Object> model) {
 		int threadId = Integer.parseInt(threadId_hex, 16);
 		// check boardname
-		try {
-			service.getBoardIdByName(boardName); //check for existence
-		} catch (NoSuchFieldException e) {
+		Group group = service.getGroup(boardName);
+		if(group == null)
 			return "redirect:pages/errorPage404";
-		}
+		
 		// check threadId
-		List<ArticleWeb> t = null;
-		try {
-			t = service.getOneThread(threadId, boardName);
-		} catch (StorageBackendException e) {
-			Log.get().log(Level.INFO, "ThreadController.getThread() failed: {0}", e.getMessage());
+		List<ArticleWeb> t  = service.getOneThread(threadId, group);
+		if (t.isEmpty()){
+			Log.get().log(Level.INFO, "No such thread: {0} of group {1}", new Object[]{threadId, group});
 			return "redirect:pages/errorPage404";
 		}
 		ArticleWeb tmain = t.remove(0);

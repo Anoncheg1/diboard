@@ -20,7 +20,7 @@ CREATE TABLE article(
  message Text,
  post_time Bigint NOT NULL,
  path_header Character varying(1000),
- hidden Int,
+ status Int NOT NULL,
  UNIQUE (message_id)
 )
 ;
