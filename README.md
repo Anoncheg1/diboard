@@ -81,3 +81,4 @@ For nntpchan:
 - solve global and local short links in message.
 - solve "partial threads" problem.
 - make one name for web and nntp.
+- do ping-pong to maintain stream connection. Set timeout (dibd.timeout = 36000) to 1 hour for nntpchan peer.
