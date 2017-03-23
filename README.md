@@ -65,7 +65,7 @@ Knews issues:
 - Impossible to chage HTML templates without recompilation.
 - HEAD and BODY NNTP commands do not read NNTPcache.
 - For TLS: only DNS names in AltNames Subject field supported.
-- It is possible to fake host in message-id and Path.(See "partial threads" in FullDocumentation)
+- It is possible to fake host in message-id and Path.(See "missing threads" in FullDocumentation)
 - It is possible to flood/spam from peers.
 - MIME implemented partially.
 - HTTP proxy not supported.

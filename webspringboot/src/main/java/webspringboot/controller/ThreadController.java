@@ -67,10 +67,11 @@ public class ThreadController {
 			|| (subject.length() == 0 && file.getSize() == 0)) {
 			errorM = "Don't flood please.";
 
-		//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
-			//errorM = "Wrong file format!";
-		} else if(file != null && file.getSize() > Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024){
-			errorM = "Your file is arger than limit "+Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024+" MB.";
+		}else if (message.length() > Config.inst().get(Config.MAX_MESSAGE_SIZE, 8192) ) {
+			errorM = "Message body is too big.";
+			
+		} else if(file != null && file.getSize() > Config.inst().get(Config.MAX_ARTICLE_SIZE, 1)*1024*1024){
+			errorM = "Your file is arger than limit "+Config.inst().get(Config.MAX_ARTICLE_SIZE, 1)+" MB.";
 		} else {
 			if (file.getSize() == 0)
 				file = null;
@@ -141,12 +142,12 @@ public class ThreadController {
 				//- ( 1 and (2 or 3) )
 			}else if (message.length() == 0 && ( subject.length() == 0 || file.getSize() == 0  )) {
 				errorM = "Don't flood please.";
+				
+			}else if (message.length() > Config.inst().get(Config.MAX_MESSAGE_SIZE, 8192) ) {
+				errorM = "Message body is too big.";
 
-			//} else if (file.getSize() != 0 && !file.getContentType().substring(0, 6).equals("image/")) {
-				//errorM = "Wrong file format!";
-
-			} else if(file != null && file.getSize() > Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024){
-				errorM = "Your file is arger than limit "+Config.inst().get(Config.ARTICLE_MAXSIZE, 1)*1024*1024+" MB.";
+			} else if(file != null && file.getSize() > Config.inst().get(Config.MAX_ARTICLE_SIZE, 1)*1024*1024){
+				errorM = "Your file is arger than limit "+Config.inst().get(Config.MAX_ARTICLE_SIZE, 1)*1024*1024+" MB.";
 			} else{
 				if (file != null && file.getSize() == 0)
 					file = null;

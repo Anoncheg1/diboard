@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import dibd.storage.AttachmentProvider;
 import dibd.storage.StorageManager;
 import dibd.storage.article.Article;
 import dibd.storage.web.WebRef;
@@ -21,6 +20,7 @@ import org.springframework.web.util.HtmlUtils;
  */
 public class ArticleWeb extends Article{
 	
+	private static final SimpleDateFormat webdate = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy"); 
 	/**
 	 * When we get threads(for board) and one thread from database.
 	 * 
@@ -67,7 +67,7 @@ public class ArticleWeb extends Article{
 	 */
 	public String getPost_time_web() {
 		Date d = new Date(super.a.post_time * 1000);
-		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(d);
+		return webdate.format(d);
 	}
 
 	public String getAttachment() {
