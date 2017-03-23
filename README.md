@@ -55,7 +55,7 @@ Features:
 ----------
 - No JavaScript.
 - Short links works globally
-- No message loss.
+- No message loss even with too large attachment.
 - Fully compatible with nntpchan soft (except tripcodes, AUTH command, decentralized moderation).
 - Only images supported for now. One attachment per post.
 - SOCKS proxy connection for Tor and i2p peering.
