@@ -3,21 +3,12 @@ package webspringboot.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.PostConstruct;
-
-import dibd.config.Config;
-import dibd.daemon.NNTPConnection;
 import dibd.feed.PushDaemon;
 import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageBackendException;

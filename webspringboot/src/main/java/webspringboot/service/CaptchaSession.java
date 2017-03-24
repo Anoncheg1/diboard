@@ -1,16 +1,8 @@
 package webspringboot.service;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.stereotype.Component;
 //TODO: add timer for every session.
 public class CaptchaSession {//very simple session FIFO.  
 	private static final int MAX = 5000;//sessions
