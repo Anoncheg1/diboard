@@ -15,6 +15,7 @@ Every nntp-imageboard should map their Short Links to global message-id in the b
 
 if you have >>asd2f in body it should be ```<message-id>```
 
+Proposed new command.(not implemented yet)
 -----------
 ```
 THREAD message-id
