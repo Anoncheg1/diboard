@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
-import dibd.feed.PushDaemon;
+
+import dibd.feed.FeedManager;
 import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageBackendException;
 import dibd.storage.StorageManager;
@@ -207,7 +208,7 @@ public class BoardThreadService {
 				ret_id = article.getId();
 				
 			//peering
-			PushDaemon.queueForPush(article);
+			FeedManager.queueForPush(article);
 		} catch (InterruptedException| IOException e) {
 			e.printStackTrace();
 		} catch (StorageBackendException e1) {

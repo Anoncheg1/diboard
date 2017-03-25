@@ -38,7 +38,7 @@ Possible errors/warning in net of peers:
 
 Peering with TLS
 ----------
-- dibd.conf tlsenabled=ture allow_unautorized_post=false
+- dibd.conf: dibd.feed=true    tlsenabled=true    allow_unautorized_post=false
 - add peer public certificates to peersTLSCertificates folder
 - yourhost.crt file is your public certificate
 - SelfKeyStore file keeps your private key
