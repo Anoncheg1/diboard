@@ -79,6 +79,6 @@ TODO:
 For nntpchan:
 ----------
 - solve global and local short links in message.
-- solve "partial threads" problem.
-- make one name for web and nntp.
+- make one name for web and nntp and Path header.
 - do ping-pong to maintain stream connection. Set timeout (dibd.timeout = 36000) to 1 hour for nntpchan peer.
+- encode to base64 if you manifest in.

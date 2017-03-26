@@ -31,7 +31,7 @@ import webspringboot.entity.ArticleWeb;
  *
  * @author Vitalij Chepelev
  * @since webspringboot/1.0.1
- * TODO: создать пул объектов базы и выдавать его объекты тредам на использование
+ * 
  */
 @Component
 public class BoardThreadService {
