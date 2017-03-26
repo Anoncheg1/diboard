@@ -13,8 +13,9 @@ Local short links implementations in global NNTP exchanging
 -----------
 Every nntp-imageboard should map their Short Links to global message-id in the body om message.
 
-if you have >>asd2f in body it should be <message-id>
+if you have >>asd2f in body it should be ```<message-id>```
 
+Proposed new command.(not implemented yet)
 -----------
 ```
 THREAD message-id
