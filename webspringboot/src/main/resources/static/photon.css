@@ -47,7 +47,9 @@ hr {
 
 .subject {
 	color: #CC1105;
+	font-weight: bold;
 	font-size: 1.2em;
+	
 }
 
 .name{

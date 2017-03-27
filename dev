@@ -27,4 +27,5 @@ when we receive message IAHVE, TAKETHIS:
 message = ShortRefParser.nntpchanLinks(message, group)
 it change all nntpchan links to global.
 2) when we push
-Article.
+1. AARTICLE command
+2. PushDaemon
