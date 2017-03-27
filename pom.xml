@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.diboard</groupId>
 	<artifactId>diboard</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<packaging>pom</packaging>
 	<name>diboard</name>
 	<description>resulting project web-frontend + Sonews (Alternative nntpchan project)</description>

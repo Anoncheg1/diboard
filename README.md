@@ -2,11 +2,12 @@
 
 To clone use: ```$ git clone --recursive```
 
-diboard v1.0.2 stable Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
+diboard v1.0.3 Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
 -----
 - scientific research on this topic
 - main goal of project is a quality of code
 - the least possible amount of third-party libraries
+- more accurate with rfc
 - philosophy 
 ![peering philosophy](https://github.com/Anoncheg1/diboard/blob/master/peering%20philosophy.png "peering philosophy")
 
@@ -78,7 +79,5 @@ TODO:
 
 For nntpchan:
 ----------
-- solve global and local short links in message.
 - make one name for web and nntp and Path header.
 - do ping-pong to maintain stream connection. Set timeout (dibd.timeout = 36000) to 1 hour for nntpchan peer.
-- encode to base64 if you manifest in.

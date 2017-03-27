@@ -20,3 +20,11 @@ when scarp:
 
 when article:
 return only if status = 0
+
+#####  nntpchan short links  #####
+when we receive message IAHVE, TAKETHIS:
+1) In ReceivingService just before to call JDBC we call:
+message = ShortRefParser.nntpchanLinks(message, group)
+it change all nntpchan links to global.
+2) when we push
+Article.

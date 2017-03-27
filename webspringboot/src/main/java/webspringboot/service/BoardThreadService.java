@@ -185,7 +185,7 @@ public class BoardThreadService {
 		StorageWeb db = null;
 		try {
 			db = storageWeb.take();
-			Article art = new Article(threadId, name, subject, ShortRefParser.getShortRefs(db, message), group);
+			Article art = new Article(threadId, name, subject, ShortRefParser.shortRefParser(db, message), group);
 
 			byte[] b = null;
 			String ct = null;
