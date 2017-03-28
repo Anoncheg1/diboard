@@ -67,7 +67,7 @@ public class CaptchaGen {
                 g.setColor(Color.white);
                 g.fillRect(1, 1, x - 2, y - 2);
 
-                java.util.List<String> badfonts = Arrays.asList(new String[]{ "Droid Sans Fallback","OpenSymbol", "Standard Symbols L"});
+                /*java.util.List<String> badfonts = Arrays.asList(new String[]{ "Droid Sans Fallback","OpenSymbol", "Standard Symbols L"});
                 //"MathJax_Script","MathJax_Size2", "MathJax_WinChrome","MathJax_AMS","MathJax_WinIE6", "MathJax_Size4", "MathJax_Caligraphic",
                 String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
                 //g.setFont(new Font("Arial", Font.BOLD, size));
@@ -76,7 +76,8 @@ public class CaptchaGen {
                 	fnum = (int) (Math.random() * fonts.length);
                 }while(badfonts.contains(fonts[fnum])|| fonts[fnum].startsWith("STIX")||fonts[fnum].startsWith("MathJax"));
                 Log.get().finest("Capcha font:"+fnum+" "+fonts[fnum]);
-                g.setFont(new Font(fonts[fnum], Font.BOLD, size));
+                g.setFont(new Font(fonts[fnum], Font.BOLD, size));*/
+                g.setFont(new Font("Arial", Font.BOLD, nSize));
 
                 int inc = x / (n + 2);
 
@@ -99,8 +100,8 @@ public class CaptchaGen {
                         g.translate(-wX, -wY);
                 }
 
-                g.setFont(new Font(fonts[fnum], Font.BOLD, size));
-                //g.setFont(new Font("Arial", Font.BOLD, nSize));
+                //g.setFont(new Font(fonts[fnum], Font.BOLD, size));
+                g.setFont(new Font("Arial", Font.BOLD, nSize));
                 for (int i = 0; i < m; ++i) {
                         g.setColor(randColor());
                         int nX = (int) (Math.random() * x);
