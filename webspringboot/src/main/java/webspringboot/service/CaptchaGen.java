@@ -1,8 +1,12 @@
 package webspringboot.service;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+
+import javax.swing.ImageIcon;
 
 import dibd.util.Log;
 
@@ -111,8 +115,15 @@ public class CaptchaGen {
 
                 g.setColor(Color.black);
                 g.drawRect(0, 0, x, y);
-
-                return img;
+                g.dispose();
+                
+                //scale
+                BufferedImage after = new BufferedImage(x*2, y*2, BufferedImage.TYPE_INT_RGB);
+                AffineTransform at = new AffineTransform();
+                at.scale(2.0, 2.0);
+                AffineTransformOp scaleOp = 
+                   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+                return scaleOp.filter(img, after);
         }
 
         private String randStr() {

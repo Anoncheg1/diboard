@@ -74,7 +74,7 @@ public class ImageController {
 	 */
 	@RequestMapping("/{boardName}/captcha-{prefix:[0-9|A-Z|a-z]*}")
 	public void captcha(@PathVariable final String prefix, HttpServletRequest req, HttpServletResponse resp) {
-		CaptchaGen cgen = new CaptchaGen(CaptchaGen.ALL_ENGLISH_CHARS_AND_NUMBERS, 150, 30, 23, 5, 1, 2, 40, 20, 60, 20);
+		CaptchaGen cgen = new CaptchaGen(CaptchaGen.ALL_ENGLISH_CHARS_AND_NUMBERS, 120, 25, 23, 5, 1, 2, 40, 20, 60, 20);
 		StringBuilder solraw = new StringBuilder();
 		BufferedImage img = cgen.generate(solraw);
 		
