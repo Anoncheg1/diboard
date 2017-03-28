@@ -15,6 +15,10 @@ a, .likelink {
 	color: #f60;
 }
 
+pre {
+	font-family: initial;
+}
+
 a:hover, .likelink:hover {
 	color: #06f;
 }

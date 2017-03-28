@@ -52,7 +52,7 @@ public class ArticleWeb extends Article{
 			}
 			
 			//new lines to HTML
-			super.a.message = super.a.message.replaceAll("\n", "<br />");
+			//super.a.message = super.a.message.replaceAll("\n", "<br />"); //replaced with <pre> tag
 		}
 	}
 
