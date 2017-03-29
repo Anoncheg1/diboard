@@ -30,3 +30,10 @@ it change all nntpchan links to global, except (>>sha1) format.
 in Article.buildNNTPMessage we call
 
 it replace global links message-id to message-id(>>sha1)
+
+
+
+###### erase group
+1) SQL: delete from thread where group_id = ?;
+2) delete /nntpcache/groupname folder
+2) delete /attachments/groupname folder
