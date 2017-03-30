@@ -1,5 +1,6 @@
 package webspringboot.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -183,24 +184,26 @@ public class BoardThreadService {
 		//Map <String, String> short_ref_messageId = getShortRefs(message);
 		int ret_id = 0; //with id
 		StorageWeb db = null;
+		File tmpf = null;
 		try {
 			db = storageWeb.take();
 			Article art = new Article(threadId, name, subject, ShortRefParser.shortRefParser(db, message), group);
 
-			byte[] b = null;
 			String ct = null;
 			String fname = null;
 			if(file != null){
-				b = file.getBytes();
 				ct = file.getContentType();
 				fname = file.getOriginalFilename();
+				
+				tmpf = File.createTempFile(fname, "");
+				file.transferTo(tmpf);
 			}
 			
 			Article article;
 			if(threadId == null)
-				article = db.createThreadWeb(art, b, ct, fname);
+				article = db.createThreadWeb(art, tmpf, ct, fname);
 			else
-				article = db.createReplayWeb(art, b, ct, fname);
+				article = db.createReplayWeb(art, tmpf, ct, fname);
 
 			if (article == null) //exist
 				return 0;
@@ -216,6 +219,10 @@ public class BoardThreadService {
 		}finally{try {
 			if (db !=null)
 				storageWeb.put(db);
+			if (tmpf != null && tmpf.exists())//not happen if file moved.
+				tmpf.delete();
+				
+				
 		} catch (InterruptedException e) {}}
 
 		return ret_id;

@@ -4,7 +4,7 @@
 	<groupId>org.diboard</groupId>
 	<artifactId>webspringboot</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<name>Web-frontend for dibd</name>
 	<url>http://maven.apache.org</url>
 
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.diboard</groupId>
 			<artifactId>dibd</artifactId>
-			<version>1.0.3-SNAPSHOT</version>
+			<version>1.0.4-SNAPSHOT</version>
 			<classifier>jar-with-dependencies</classifier>
 		</dependency>
 

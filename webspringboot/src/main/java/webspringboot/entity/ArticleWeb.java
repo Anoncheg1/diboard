@@ -32,7 +32,7 @@ public class ArticleWeb extends Article{
 		super(article);
 		
 		if(super.a.a_name == null || super.a.a_name.equals(""))
-			super.a.a_name = "Anonymous";
+			super.a.a_name = "Anonymous"; //we add it only for output
 		
 		if (super.a.subject == null)
 			super.a.subject = "";
