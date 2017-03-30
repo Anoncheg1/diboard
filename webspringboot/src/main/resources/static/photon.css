@@ -17,6 +17,7 @@ a, .likelink {
 
 pre {
 	font-family: initial;
+	white-space: pre-wrap;
 }
 
 a:hover, .likelink:hover {
