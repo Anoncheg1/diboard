@@ -33,9 +33,11 @@ nntpchan keep open connection without ping-pong. We close idling connections for
 Possible errors/warning in net of peers:
 ------------------------
 * new peer in group
-* max posts per thread have different limit
+* if nntpchan is peer there may be replays without threads in XOVER, wrong formatted articles, etc.
+* "WARNING Can not create thumbnail" is normal. Ignore it.
 * hostname/groupname was changed inside peer
 * spoofing and spamming
+* max replays per thread have different limit
 
 Peering with TLS
 ----------
