@@ -59,7 +59,7 @@ Features:
 - No message loss even with too large attachment.
 - Fully compatible with nntpchan soft (except tripcodes, AUTH command, decentralized moderation).
 - Only images supported for now. One attachment per post.
-- SOCKS proxy connection for Tor and i2p peering.
+- SOCKS proxy connection for Tor OR i2p working.
 - Flexible control of used disk space and used resources.
 
 Knews issues:

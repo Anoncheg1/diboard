@@ -46,7 +46,8 @@ public class ArticleWeb extends Article{
 			for(Map.Entry<String, WebRef> ref : refs.entrySet()){
 				WebRef wr = (WebRef) ref.getValue();
 
-				String refW = "<a href=\"thread-"+wr.getThread_id_hex()+"#"+wr.getReplay_id_hex()+"\">&gt;&gt;"+wr.getReplay_id_hex()+"</a>";
+				String rhex = wr.getReplay_id_hex();
+				String refW = "<a href=\"thread-"+wr.getThread_id_hex()+"#"+rhex+"\">&gt;&gt;"+rhex+"</a>";
 
 				super.a.message = super.a.message.replace(HtmlUtils.htmlEscape(ref.getKey()), refW);
 			}

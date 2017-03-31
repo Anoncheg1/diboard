@@ -165,9 +165,10 @@ public class ThreadController {
 	}
 
 	// Show thread
-	// TODO: convert threadId to hex for links
-	@RequestMapping(value = "/{boardName}/thread-{threadId_hex:[0-9a-fA-F]*}")
-	public String getThread(@PathVariable final String boardName, @PathVariable final String threadId_hex,
+	// # symbol is not recognized, that is why we repeat #HEX as !HEX#HEX
+	@RequestMapping(value = "/{boardName}/thread-{threadId_hex:[0-9a-fA-F]*}!{replayId_hex:[0-9a-fA-F]*}", method = RequestMethod.GET)
+	public String getThread(@PathVariable final String boardName, 
+			@PathVariable final String threadId_hex, @PathVariable final String replayId_hex,
 			Map<String, Object> model) {
 		int threadId = Integer.parseInt(threadId_hex, 16);
 		// check boardname
@@ -198,6 +199,59 @@ public class ThreadController {
 
 		model.put("thread", tmain);
 		model.put("replays", t);
+		
+		model.put("message", new Capsule(">>"+replayId_hex));
+		
+		if (t.size() > Config.inst().get(Config.MAX_REPLAYS, 500))
+			model.put("error", new Capsule("Thread has reached rLeft limit."));
+
+		return "thread";
+	}
+	
+	/*@RequestMapping(value = "/{boardName}/thread-{threadId_hex:[0-9a-fA-F]*}", method = RequestMethod.GET)
+	public String getBoard2(@PathVariable final String boardName, 
+			@PathVariable final String threadId_hex) {
+		return "redirect:/{boardName}/thread-"+threadId_hex+"!0";
+	}*/
+	
+	
+	// Show thread. Redirect is not working we must create method without message injection! for redirect to here from "error in creating replay".
+	// # symbol is not recognized, that is why we repeat #HEX as !HEX#HEX
+	@RequestMapping(value = "/{boardName}/thread-{threadId_hex:[0-9a-fA-F]*}", method = RequestMethod.GET)
+	public String getThread(@PathVariable final String boardName, 
+			@PathVariable final String threadId_hex, //@PathVariable final String replayId_hex,
+			Map<String, Object> model) {
+		int threadId = Integer.parseInt(threadId_hex, 16);
+		// check boardname
+		Group group = service.getGroup(boardName);
+		if(group == null)
+			return "redirect:pages/errorPage404";
+		
+		// check threadId
+		List<ArticleWeb> t  = service.getOneThread(threadId, group);
+		if (t.isEmpty()){
+			Log.get().log(Level.INFO, "No such thread: {0} of group {1}", new Object[]{threadId, group.getName()});
+			return "redirect:pages/errorPage404";
+		}
+		ArticleWeb tmain = t.remove(0);
+
+		// header
+		model.put("boardName", boardName);
+		model.put("hostName", Config.inst().get(Config.HOSTNAME, null));
+		// form
+		model.put("post_url", "/post/" + boardName + "/thread-" + threadId_hex);
+		model.put("reference", "");
+		model.put("button", "Replay");
+		model.put("files", true);
+		
+		//prefix for captcha
+		model.put("prefix", CaptchaSession.generate()); //prefix = session
+		//model.put("prefix", "");
+
+		model.put("thread", tmain);
+		model.put("replays", t);
+		
+		//model.put("message", new Capsule(">>"+replayId_hex));
 		
 		if (t.size() > Config.inst().get(Config.MAX_REPLAYS, 500))
 			model.put("error", new Capsule("Thread has reached rLeft limit."));

@@ -124,8 +124,8 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/{boardName}/")
-	public String getBoard2(@PathVariable String boardName, Map<String, Object> model) {
+	public String getBoard2(@PathVariable String boardName) {
 		return "redirect:/{boardName}/0";
 	}
-
+	
 }
