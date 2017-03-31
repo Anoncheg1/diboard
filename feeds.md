@@ -28,6 +28,7 @@ Recomendations:
 
 **peers per groups - groups.conf MUST be public**
 
+nntpchan keep open connection without ping-pong. We close idling connections for DDoS protection. Set timeout (dibd.timeout = 36000) to 1 hour for nntpchan peer.
 
 Possible errors/warning in net of peers:
 ------------------------

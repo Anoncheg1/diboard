@@ -2,7 +2,7 @@
 
 To clone use: ```$ git clone --recursive```
 
-diboard v1.0.3 Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
+diboard v1.0.4 Decentralized ImageBoard just like [nntpchan](https://github.com/majestrate/nntpchan) with following differences:
 -----
 - scientific research on this topic
 - main goal of project is a quality of code
@@ -60,6 +60,7 @@ Features:
 - Fully compatible with nntpchan soft (except tripcodes, AUTH command, decentralized moderation).
 - Only images supported for now. One attachment per post.
 - SOCKS proxy connection for Tor and i2p peering.
+- Flexible control of used disk space and used resources.
 
 Knews issues:
 ----------
@@ -67,17 +68,16 @@ Knews issues:
 - HEAD and BODY NNTP commands do not read NNTPcache.
 - For TLS: only DNS names in AltNames Subject field supported.
 - It is possible to fake host in message-id and Path.(See "missing threads" in FullDocumentation)
-- It is possible to flood/spam from peers.
-- MIME implemented partially.
+- It is possible to flood/spam from peers, that is why we need networking groups.
 - HTTP proxy not supported.
 
 TODO:
 ----------
 1. create new web-frontend with HTML cache
-2. unit test for TLS
-3. make separate implementation of pull and push for fast flow.
+2. make separate implementation of pull and push for fast flow.
+3. replace XOVER with new commands.
 
 For nntpchan:
 ----------
-- make one name for web and nntp and Path header.
-- do ping-pong to maintain stream connection. Set timeout (dibd.timeout = 36000) to 1 hour for nntpchan peer.
+- make one name for host: web, nntp and in Path header.
+- do ping-pong to maintain stream connection.
