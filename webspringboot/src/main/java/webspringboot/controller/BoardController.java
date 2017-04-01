@@ -41,7 +41,7 @@ public class BoardController {
 	@RequestMapping("/")
 	public String index(Map<String, Object> model) {
 		model.put("boards_names", StorageManager.groups.getAllNames());
-		model.put("message", "Welcome to diboard "+dibd.App.VERSION+".<br /><br />Networking groups here:");
+		model.put("message", "Welcome to <h1>"+Config.inst().get(Config.HOSTNAME, null)+"</h1> diboard "+dibd.App.VERSION+".<br /><br />Networking groups here:");
 		
 		List<String> groups= new ArrayList<>();
 		for(Group g : StorageManager.groups.getAll()){
@@ -110,7 +110,7 @@ public class BoardController {
 				pages = pages.concat("<a href=" + i + ">[" + i + "]</a>&ensp;");
 
 		model.put("boardName", boardName);
-		model.put("hostName", Config.inst().get(Config.HOSTNAME, "localhost"));
+		model.put("hostName", Config.inst().get(Config.HOSTNAME, null));
 		model.put("pages", pages); //[0][1] - one line
 		// form
 		model.put("post_url", "/post/" + boardName + "/");
