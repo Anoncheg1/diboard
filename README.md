@@ -81,3 +81,8 @@ For nntpchan:
 ----------
 - make one name for host: web, nntp and in Path header.
 - do ping-pong to maintain stream connection.
+
+
+SCREENSHOT
+----------
+![screen](https://github.com/Anoncheg1/diboard/blob/master/screen.npg "screenshot")
