@@ -1,5 +1,5 @@
 v1.0.4
 - attachment saving optimization, no memory used.
 - shorter transactions, more stable.
-- log rotation
+- log rotation and log directory
 - memory usage decreased, large attachment now supported (temp directory used).
