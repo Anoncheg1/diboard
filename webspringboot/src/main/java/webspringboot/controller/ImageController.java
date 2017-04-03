@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dibd.storage.AttachmentProvider;
 import dibd.storage.AttachmentProvider.Atype;
 import dibd.storage.StorageManager;
 import webspringboot.service.CaptchaGen;

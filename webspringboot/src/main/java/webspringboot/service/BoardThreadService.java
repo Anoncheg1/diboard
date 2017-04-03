@@ -30,6 +30,8 @@ import webspringboot.entity.ArticleWeb;
 /**
  * Represents a boards - groups.
  *
+ * Fucking magic because of dynamically generated threads.
+ *
  * @author Vitalij Chepelev
  * @since webspringboot/1.0.1
  * 
@@ -39,7 +41,7 @@ public class BoardThreadService {
 
 	//private final StorageWeb db;
 	// TODO Make configurable
-	public static final int QUEUE_SIZE = 5;
+	public static final int QUEUE_SIZE = 9;
 	
 	//must be thread-safe
 	private final ArrayBlockingQueue<StorageWeb> storageWeb = new ArrayBlockingQueue<StorageWeb>(QUEUE_SIZE);
@@ -73,7 +75,7 @@ public class BoardThreadService {
 		return new ArrayList<String>(boards.keySet());
 	}*/
 
-	
+	Object lock1 = new Object();
 	/**
 	 * Get threads with rLeft
 	 * 
@@ -90,43 +92,45 @@ public class BoardThreadService {
 			throw new NoSuchFieldException("Wrong boardName.");
 		
 		StorageWeb db = null;
-		try {
-			db = storageWeb.take();
-			Map<ThRLeft<Article>,List<Article>> threads = db.getThreads(boardId, boardPage, boardName);
-
-			ret = new LinkedHashMap<ThRLeft<ArticleWeb>,List<ArticleWeb>>();
-			for (Entry<ThRLeft<Article>, List<Article>> entry : threads.entrySet()) {
-				//value
-				List<ArticleWeb> replays = new ArrayList<ArticleWeb>();
-				for(Article a: entry.getValue()){
-					Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
-
-					replays.add(new ArticleWeb(a, refs));
-				}
-				//key
-				ThRLeft<Article> key = entry.getKey();
-				Article thread = key.getThread();
-				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, thread.getMessage());
-				ThRLeft<ArticleWeb> threadW = new ThRLeft<ArticleWeb>(new ArticleWeb(thread, refs), key.getRLeft()); 
-				ret.put(threadW, replays);
-			}
-
-		} catch (StorageBackendException e) {
-			Log.get().log(Level.SEVERE, "BoardService.getThreads() failed: {0}", e);
-			return null;
-		} catch (InterruptedException e) {
-			return null;
-		} finally{
+		Map<ThRLeft<Article>,List<Article>> threads;
+		synchronized(lock1){
 			try {
-				if(db != null)
-					storageWeb.put(db);
-			} catch (InterruptedException ex) {}
+				db = storageWeb.take();
+				threads = db.getThreads(boardId, boardPage, boardName);
+			} catch (StorageBackendException e) {
+				Log.get().log(Level.SEVERE, "BoardService.getThreads() failed: {0}", e);
+				return null;
+			} catch (InterruptedException e) {
+				return null;
+			} finally{
+				try {
+					if(db != null)
+						storageWeb.put(db);
+				} catch (InterruptedException ex) {}
+			}
 		}
-			
+		ret = new LinkedHashMap<ThRLeft<ArticleWeb>,List<ArticleWeb>>();
+		for (Entry<ThRLeft<Article>, List<Article>> entry : threads.entrySet()) {
+			//value
+			List<ArticleWeb> replays = new ArrayList<ArticleWeb>();
+			for(Article a: entry.getValue()){
+				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
+
+				replays.add(new ArticleWeb(a, refs));
+			}
+			//key
+			ThRLeft<Article> key = entry.getKey();
+			Article thread = key.getThread();
+			Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, thread.getMessage());
+			ThRLeft<ArticleWeb> threadW = new ThRLeft<ArticleWeb>(new ArticleWeb(thread, refs), key.getRLeft()); 
+			ret.put(threadW, replays);
+		}
+		
 		return ret;
 	}
 	
 	
+	Object lock2 = new Object();
 	/**
 	 * Get threads count total for boardName.
 	 * 
@@ -135,37 +139,31 @@ public class BoardThreadService {
 	 * @throws NoSuchFieldException if boardName not exist 
 	 */
 	public int getThreadsCount(String boardName) throws NoSuchFieldException {
-		Integer boardId = StorageManager.groups.get(boardName).getInternalID();
-		if(boardId == 0)
-			throw new NoSuchFieldException();
-		int count=0;
-		StorageWeb db = null;
-		try {
-			db = storageWeb.take();
-			count = db.getThreadsCountGroup(boardId);
-		} catch (StorageBackendException e) {
-			Log.get().log(Level.SEVERE, "BoardService.getThreadsCount() failed: {0}", e);
-			return Integer.MAX_VALUE;
-		} catch (InterruptedException e) {
-		} finally{
+		synchronized(lock2){
+			Integer boardId = StorageManager.groups.get(boardName).getInternalID();
+			if(boardId == 0)
+				throw new NoSuchFieldException();
+			int count=0;
+			StorageWeb db = null;
 			try {
-				if(db != null)
-					storageWeb.put(db);
-			} catch (InterruptedException ex) {}
+				db = storageWeb.take();
+				count = db.getThreadsCountGroup(boardId);
+			} catch (StorageBackendException e) {
+				Log.get().log(Level.SEVERE, "BoardService.getThreadsCount() failed: {0}", e);
+				return Integer.MAX_VALUE;
+			} catch (InterruptedException e) {
+			} finally{
+				try {
+					if(db != null)
+						storageWeb.put(db);
+				} catch (InterruptedException ex) {}
+			}
+			return count;
 		}
-		return count;
 	}
 	
 
-	// public void validateBoard(String boardId);
-	// public Board getBoardById(String boardId);
-	// public List<Board> getAllBoards();
-	// public List<List<Message>> getThread(String boardId);
-	// public List<String> getAllBoards();
-	
-	
-
-	
+	Object lock3 = new Object();
 	/**
 	 *  Create new thread or replay.
 	 * 
@@ -180,80 +178,86 @@ public class BoardThreadService {
 	 */
 	public int createArticle(final Integer threadId, Group group, 
 			String name, final String subject, String message, final MultipartFile file) {
-
-		//Map <String, String> short_ref_messageId = getShortRefs(message);
-		int ret_id = 0; //with id
-		StorageWeb db = null;
-		File tmpf = null;
-		try {
-			db = storageWeb.take();
-			Article art = new Article(threadId, name, subject, ShortRefParser.shortRefParser(db, message), group);
-
-			String ct = null;
-			String fname = null;
-			if(file != null){
-				ct = file.getContentType();
-				fname = file.getOriginalFilename();
-				
-				tmpf = File.createTempFile(fname, "");
-				file.transferTo(tmpf);
-			}
-			
-			Article article;
-			if(threadId == null)
-				article = db.createThreadWeb(art, tmpf, ct, fname);
-			else
-				article = db.createReplayWeb(art, tmpf, ct, fname);
-
-			if (article == null) //exist
-				return 0;
-			else
-				ret_id = article.getId();
-				
-			//peering
-			FeedManager.queueForPush(article);
-		} catch (InterruptedException| IOException e) {
-			e.printStackTrace();
-		} catch (StorageBackendException e1) {
-			Log.get().log(Level.SEVERE, "ThreadService.createArticle() failed: {0}", e1);
-		}finally{try {
-			if (db !=null)
-				storageWeb.put(db);
-			if (tmpf != null && tmpf.exists())//not happen if file moved.
-				tmpf.delete();
-				
-				
-		} catch (InterruptedException e) {}}
-
-		return ret_id;
-	}
-	
-
-	public List<ArticleWeb> getOneThread(int threadId, Group group){
-		List<ArticleWeb> thread = new ArrayList<ArticleWeb>();
 		
-		StorageWeb db = null;
-		try {
-			db = storageWeb.take();
-			assert(group != null);
-			List<Article> al = db.getOneThread(threadId, group.getName(), 1); //get 1 and 0 status
-			if (al.isEmpty())
-				return new ArrayList<ArticleWeb>(0);
-			
-			for(Article a: al){
-				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
-				thread.add(new ArticleWeb(a, refs));
-			}
-		} catch (InterruptedException | StorageBackendException e) {
-			return thread;
-		}finally{try {
-			if (db !=null)
-				storageWeb.put(db);
-		} catch (InterruptedException e) {}}
+		synchronized(lock3){
+			//Map <String, String> short_ref_messageId = getShortRefs(message);
+			int ret_id = 0; //with id
+			StorageWeb db = null;
+			File tmpf = null;
+			try {
+				db = storageWeb.take();
+				Article art = new Article(threadId, name, subject, ShortRefParser.shortRefParser(db, message), group);
 
-		return thread;
+				String ct = null;
+				String fname = null;
+				if(file != null){
+					ct = file.getContentType();
+					fname = file.getOriginalFilename();
+
+					tmpf = File.createTempFile(fname, "");
+					file.transferTo(tmpf);
+				}
+
+				Article article;
+				if(threadId == null)
+					article = db.createThreadWeb(art, tmpf, ct, fname);
+				else
+					article = db.createReplayWeb(art, tmpf, ct, fname);
+
+				if (article == null) //exist
+					return 0;
+				else
+					ret_id = article.getId();
+
+				//peering
+				FeedManager.queueForPush(article);
+			} catch (InterruptedException| IOException e) {
+				e.printStackTrace();
+			} catch (StorageBackendException e1) {
+				Log.get().log(Level.SEVERE, "ThreadService.createArticle() failed: {0}", e1);
+			}finally{try {
+				if (db !=null)
+					storageWeb.put(db);
+				if (tmpf != null && tmpf.exists())//not happen if file moved.
+					tmpf.delete();
+
+
+			} catch (InterruptedException e) {}}
+
+			return ret_id;
+		}
 	}
 	
+	Object lock4 = new Object();
+	
+	public List<ArticleWeb> getOneThread(int threadId, Group group){
+		synchronized(lock4){
+			List<ArticleWeb> thread = new ArrayList<ArticleWeb>();
+
+			StorageWeb db = null;
+			try {
+				db = storageWeb.take();
+				assert(group != null);
+				List<Article> al = db.getOneThread(threadId, group.getName(), 1); //get 1 and 0 status
+				if (al.isEmpty())
+					return new ArrayList<ArticleWeb>(0);
+
+				for(Article a: al){
+					Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
+					thread.add(new ArticleWeb(a, refs));
+				}
+			} catch (InterruptedException | StorageBackendException e) {
+				return thread;
+			}finally{try {
+				if (db !=null)
+					storageWeb.put(db);
+			} catch (InterruptedException e) {}}
+
+			return thread;
+		}
+	}
+	
+	Object lock5 = new Object();
 	/**
 	 * Required to make limit of rLeft.
 	 * 
@@ -261,20 +265,22 @@ public class BoardThreadService {
 	 * @return
 	 */
 	public int getReplaysCount(int threadId){
-		StorageWeb db = null;
-		int count = -1;
-		try {
-			db = storageWeb.take();
-			count = db.getReplaysCount(threadId);
-		} catch (InterruptedException e) {
-		} catch (StorageBackendException e) {
-			Log.get().log(Level.SEVERE, "ThreadService.getReplaysCount() failed: {0}", e);
-		}finally{try {
-			if (db !=null)
-				storageWeb.put(db);
-		} catch (InterruptedException e) {}}
-		
-		return count;
+		synchronized(lock5){
+			StorageWeb db = null;
+			int count = -1;
+			try {
+				db = storageWeb.take();
+				count = db.getReplaysCount(threadId);
+			} catch (InterruptedException e) {
+			} catch (StorageBackendException e) {
+				Log.get().log(Level.SEVERE, "ThreadService.getReplaysCount() failed: {0}", e);
+			}finally{try {
+				if (db !=null)
+					storageWeb.put(db);
+			} catch (InterruptedException e) {}}
+
+			return count;
+		}
 	}
 	
 }
