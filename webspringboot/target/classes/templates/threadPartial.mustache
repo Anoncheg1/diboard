@@ -1,0 +1,24 @@
+{{! threadPartial.mustache -- one thread to display template parameter:
+- ArticleWeb now used from Article web: - boardName - subject - a_name -
+post_time_web - thread_id - attachment - HTML! - message }}
+
+
+
+<table class="thread">
+	<tr>
+		<td><a class="subject" href="{{{href}}}">{{subject}}</a><br/>
+		<span class="name">{{a_name}}</span> {{{post_time_web}}} {{messageId}} n. <a
+			id="{{{id_hex}}}" href="{{{href}}}" title="{{{id}}}">{{{id_hex}}}</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					{{{attachment}}}
+					<td class="message"><pre>{{{message}}}</pre></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
