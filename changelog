@@ -1,5 +1,5 @@
 v1.0.4
-- attachment saving optimization, no memory used.
+- attachment saving optimization, possible to receive large attachment.
 - shorter transactions, more stable.
-- log rotation and log directory
-- memory usage decreased, large attachment now supported (temp directory used).
+- log rotation and log directory.
+- system-independent path for nntpcache and attachments

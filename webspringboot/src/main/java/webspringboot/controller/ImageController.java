@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dibd.storage.AttachmentProvider;
+import dibd.storage.AttachmentProvider.Atype;
+import dibd.storage.StorageManager;
 import webspringboot.service.CaptchaGen;
 import webspringboot.service.CaptchaSession;
 
@@ -26,28 +29,41 @@ public class ImageController {
 	@RequestMapping("/{what:[a-z]{3}}/{boardName}/{fileName:.+}")
 	public void file(HttpServletRequest req, HttpServletResponse resp, 
 			@PathVariable final String what, @PathVariable final String boardName, @PathVariable final String fileName) {
-		//File ofile = new File(Config.inst().get(Config.ATTACHMENTSPATH, "attachments/") + boardName + "/"+what+"/" + fileName+"."+ext);
-		File ofile = new File("attachments/" + boardName + "/"+what+"/" + fileName);
+		//check existence of what?
+		Atype type = Atype.valueOf(what);
+		
+		//File ofile = new File("attachments/" + boardName + "/"+what+"/" + fileName);
+		File ofile = StorageManager.attachments.getPath(boardName, fileName, type);
 		if(ofile.exists()){
 			try {
 				FileInputStream fos = new FileInputStream (ofile);
-				
+				OutputStream or = null;
 			    try {
-			    	if (what.equals("img") && 
-			    			! new File("attachments/" + boardName + "/"+"thm"+"/" + fileName).exists())
+			    	if (type.equals(Atype.img) && 
+			    			! StorageManager.attachments.getPath(boardName, fileName, Atype.thm).exists())
 			    		resp.setContentType("dont/open");
-			    	OutputStream or = resp.getOutputStream();
+			    	or = resp.getOutputStream();
 			    	//BufferedOutputStream bo = new BufferedOutputStream(resp.getOutputStream());
 			    	byte[] bs = new byte[100];
 			    	int n = 0;
 			    	while((n = fos.read(bs)) != -1){
 			    		or.write(bs, 0, n);
 			    	}
-			    	fos.close();
 			    	or.flush();
+			    	
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally{
+					if (or != null)
+						try {
+							or.close();
+						} catch (IOException e1) {}
+					if (fos != null)
+						try {
+							
+							fos.close();
+						} catch (IOException e) {	}
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
