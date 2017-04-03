@@ -37,3 +37,8 @@ it replace global links message-id to message-id(>>sha1)
 1) SQL: delete from thread where group_id = ?;
 2) delete /nntpcache/groupname folder
 2) delete /attachments/groupname folder
+
+###### check id space available
+1) 16^? where ? is dibd.id_f_count = all available space
+2) SQL select count(*) from article; = current used space
+if 1) > 2)/2 then it is time to increase dibd.id_f_count
