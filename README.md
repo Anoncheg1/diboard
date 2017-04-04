@@ -84,8 +84,12 @@ For nntpchan:
 
 jar verification:
 ----------
-jarsigner -certchain pub.crt -verify -certs webspringboot/target/diboard.jar 
-
+```
+$ gpg2 --import pubkey.asc
+$ cd webspringboot/target/
+$ gpg --verify diboard.jar.sig diboard.jar
+fingerprint 24B8 DB4A 109A 254C 1CD8  1629 BBC5 0968 5FC9 36DB
+```
 
 SCREENSHOT
 ----------
