@@ -1,9 +1,0 @@
-webspringboot/controller/BoardController.class
-webspringboot/controller/ImageController.class
-webspringboot/controller/ThreadController.class
-webspringboot/service/BoardThreadService.class
-webspringboot/Application.class
-webspringboot/service/CaptchaGen.class
-webspringboot/controller/ThreadController$Capsule.class
-webspringboot/service/CaptchaSession.class
-webspringboot/entity/ArticleWeb.class
