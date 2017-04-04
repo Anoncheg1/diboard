@@ -82,6 +82,10 @@ For nntpchan:
 - make one name for host: web, nntp and in Path header.
 - do ping-pong to maintain stream connection.
 
+jar verification:
+----------
+jarsigner -certchain pub.crt -verify -certs webspringboot/target/diboard.jar 
+
 
 SCREENSHOT
 ----------
