@@ -1,3 +1,6 @@
+v1.0.5
+- attachment saving cpu usage decreased.
+
 v1.0.4
 - attachment saving optimization, possible to receive large attachment.
 - shorter transactions, more stable.
