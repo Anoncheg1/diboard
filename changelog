@@ -3,6 +3,7 @@ v1.0.5
 - pull buffer error fixed
 - article pushing - memory usage optimizated
 - push loop fixed
+- serious base64 bug fixed
 
 v1.0.4
 - attachment saving optimization, possible to receive large attachment.
