@@ -1,0 +1,61 @@
+Tested for Window 7 32
+
+1) instal Java 8 JDK
+for 32x: jdk-8u131-windows-i586.exe
+for 64x: jdk-8u131-windows-x64.exe
+
+2) Add keytool to PATH
+	Right click on MyComputer -> Advanced system settings -> Advanced tab -> Environment Varibles -> System varibles
+	select PATH varible -> Edit
+	at the end of the line add:
+	;C:\Program Files\Java\jdk1.8.0_131\bin\
+	is a path to installed jdk folder with keytool.exe inside.
+
+3) install ImageMagic https://www.imagemagick.org/script/binary-releases.php
+for 32x: ImageMagick-7.0.5-4-Q16-x86-static.exe
+for 64x: ImageMagick-7.0.5-4-Q16-x64-static.exe
+
+4) PostgreSQL:
+4.1) Diwnload https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows
+	select lastest version PostgreSQL 9.6.2
+4.2) Install
+	for installation internet connection required.
+	select any password of superuser: postgres (remember)
+	leave default settings. Port:5432
+	StackBuilder is not required.
+4.3) Configuration
+	WindowsButton -> All Programs -> PostgreSQL -> SQL shell(psql)
+	Enter
+	Enter
+	Enter
+	Enter
+	password for superuser: postgres that you created in installation
+	postgres=# CREATE ROLE dibd WITH LOGIN PASSWORD 'mysecret';
+	postgres=# CREATE DATABASE dibd WITH OWNER dibd ENCODING 'UTF8';
+	postgres=# \q
+	
+	WindowsButton -> in white field enter: cmd
+	>cd 
+	drag and drop C:\Programs\PostgreSQL\9.6\bin folder to black window that you will get:
+	>cd C:\Programs\PostgreSQL\9.6\bin
+	>psql -d dibd -a -f drag and drop C:\diboard\dibd.SQL that you will get:
+	>psql -p 5432 -d dibd -U dibd -a -f C:\diboard\dibd.SQL
+	Password for user: mysecret
+	No ERROR messages should be here. If any error DROP DATABASE dibd; and repeat again.
+	
+5) open /webspringboot/ folder
+
+6) open dibd.conf with WordPad
+edit:   dibd.path.imagemagic=C:\Program Files\ImageMagick-7.0.5-Q16
+dibd.hostname=myhost.onion
+
+7) rename file: startdebug to startdebug.bat
+8) click startdebug.bat
+OR you can open cmd
+>cd /D path_to_webspringboot/
+>startdebug.bat
+OR
+>cd /D path_to_webspringboot/
+>java -Dserver.port=8070 -jar target/diboard.jar -p 7119
+where 8070 web server port, 7119 NNT port
+in browser check: http://localhost:8070

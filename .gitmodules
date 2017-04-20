@@ -1,0 +1,3 @@
+[submodule "dibd"]
+	path = dibd
+	url = https://github.com/Anoncheg1/dibd.git

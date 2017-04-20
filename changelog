@@ -1,0 +1,26 @@
+v1.0.8
+- for commands TAKETHIS IHAVE crossing fixed
+- files stored without extension for better content detection. Use cd overchan.test/img/ && ls | sed 's#\(\([0-9]*\)\..*\)#mv \1 \2#g' |sh ; cd ../..
+- frontend: captcha reload to separate clear page for low bandwidth users.
+
+v1.0.7
+- big bug in receiving push which cause CPU overflow and halt
+- index page shows new articles (you can edit index page webspringboot/src/main/resources/templates/index.mustache)
+- pull little fixes
+- xover for nntpchan slowed, we more actively using a push
+
+v1.0.6
+- pull scrap for nntpchan didn't sort threads properly.(pull was broken)
+
+v1.0.5
+- attachment saving cpu usage decreased.
+- pull buffer error fixed
+- article pushing - memory usage optimizated
+- push loop fixed
+- serious base64 bug fixed
+
+v1.0.4
+- attachment saving optimization, possible to receive large attachment.
+- shorter transactions, more stable.
+- log rotation and log directory.
+- system-independent path for nntpcache and attachments

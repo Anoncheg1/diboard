@@ -1,0 +1,6 @@
+Welcome to sonews help system
+
+Here is a list of the supported NNTP commands of this newsserver.
+Use HELP <command> to retrieve detailed help information of a
+specific command.
+

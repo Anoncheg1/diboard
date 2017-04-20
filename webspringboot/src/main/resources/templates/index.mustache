@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ImageBoard</title>
+<link rel="stylesheet" href="photon.css" type="text/css">
+
+<style>
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+</style>
+</head>
+<body>
+<div class="body">
+	<div id="index-top">
+		{{#boards_names}}
+ 			<a href="/{{key}}/0">{{value}}</a> / 
+		{{/boards_names}}
+	</div>
+<hr/>
+<p>{{{message}}}</p>
+
+
+
+{{#groups}}
+	<table>
+		<tr>
+ 			<td style="width:105px">{{gname}}</td>
+ 			
+ 			{{#articles}}
+ 			<td>{{{toString}}}</td>
+ 			{{/articles}}
+ 		</tr>
+	</table>
+	<hr/> 
+{{/groups}}
+
+
+
+
+{{{groups_network1}}}
+{{#groups_network2}}
+	{{toString}}<br/><br/> 
+{{/groups_network2}}
+
+</div>
+
+</body>
+</html>
