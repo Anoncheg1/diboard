@@ -28,9 +28,10 @@ import webspringboot.entity.ArticleWeb;
 import webspringboot.entity.ArticleWeb.oneMany;
 
 /**
- * Represents a boards - groups.
- *
- * For dynamically spawn threads by Spring Boot.
+ * Facade to dibd core and service for controllers.
+ * 
+ * Database interface (db) used as StorageObjectPool
+ * instead of StorageManager.current().
  *
  * @author user
  * @since webspringboot/1.0.1

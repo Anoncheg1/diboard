@@ -20,9 +20,11 @@ Structure:
 
 System Requirements
 -----
-We are very flexible. 
-Min RAM 500MB.
-Java 8.
+
+- Min RAM for everything 600MB free.
+- Java 8 JDK.
+- ImageMagic. (used for thumbnails)
+- PostgreSQL or MySQL.
 
 Installation
 -----
@@ -40,7 +42,7 @@ $ psql dibd
 dibd=# \i /home/user/diboard/dibd.SQL
 ```
 3. configure webspringboot/dibd.conf
-4. install ImageMagic (used for thumbnail)
+4. install ImageMagic (read https://www.imagemagick.org/script/security-policy.php)
 5. Compile
 ```
 $ cd diboard
