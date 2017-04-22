@@ -81,7 +81,7 @@ Knews issues:
 
 TODO:
 ----------
-1. create new web-frontend with HTML cache
+1. create another web-frontend with external templates and more minimalistic.
 2. replace XOVER with new commands.
 
 For nntpchan:
