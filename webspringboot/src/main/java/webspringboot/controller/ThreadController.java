@@ -48,7 +48,7 @@ public class ThreadController {
 		// check boardname
 		Group group = service.getGroup(boardName);
 		if(group == null)
-			return "redirect:pages/errorPage404";
+			return "404";
 
 		String errorM = null;
 
@@ -105,7 +105,7 @@ public class ThreadController {
 		// check boardname
 		Group group = service.getGroup(boardName);
 		if(group == null)
-			return "redirect:pages/errorPage404";
+			return "404";
 
 		String errorM = null;
 		int id = 0;
@@ -113,7 +113,7 @@ public class ThreadController {
 		//Check rLeft count
 		int count = service.getReplaysCount(threadId);
 		if (count == -1)
-			return "pages/errorPage404";
+			return "404";
 		else if (service.getReplaysCount(threadId) >
 		Config.inst().get(Config.MAX_REPLAYS, 500))
 			errorM = "Thread has reached replays limit.";
@@ -181,7 +181,7 @@ public class ThreadController {
 		// check boardname
 		Group group = service.getGroup(boardName);
 		if(group == null)
-			return "redirect:pages/errorPage404";
+			return "404";
 		
 		// check threadId
 		List<ArticleWeb> t  = service.getOneThread(threadId, group);
@@ -227,7 +227,7 @@ public class ThreadController {
 			// check boardname
 			Group group = service.getGroup(boardName);
 			if(group == null)
-				return "redirect:pages/errorPage404";
+				return "404";
 			
 			// TODO: check threadId !!!!!!!!!!
 			
@@ -263,7 +263,7 @@ public class ThreadController {
 			// check boardname
 			Group group = service.getGroup(boardName);
 			if(group == null)
-				return "redirect:pages/errorPage404";
+				return "404";
 			
 			// TODO: check threadId !!!!!!!!!!
 			

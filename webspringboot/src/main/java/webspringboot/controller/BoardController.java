@@ -14,12 +14,9 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import dibd.config.Config;
 import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageManager;
@@ -47,15 +44,6 @@ public class BoardController {
 	
 	int size = Config.inst().get(Config.MAX_ARTICLE_SIZE, 1);
 
-	
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public final class NotFoundException extends RuntimeException {
-
-		private static final long serialVersionUID = 1L;
-		//  class definition
-	}
-	
-	
 	@RequestMapping("/")
 	public void index(HttpServletResponse resp) throws IOException {
 		File ofile = new File("index.html");
@@ -113,14 +101,13 @@ public class BoardController {
 		//check that group is not deleted. Do we need it?
 		Group g = StorageManager.groups.get(boardName);
 		if(g == null || g.isDeleted())
-			//throw new NotFoundException(); 
-			return "redirect:pages/errorPage404";
+			return "404";
 		
 		try {
 			count = service.getThreadsCount(boardName);
 		} catch (NoSuchFieldException e) {
 			Log.get().log(Level.INFO, "BoardController.getBoardIndex() at getThreads() failed: {0}", e);
-			return "redirect:pages/errorPage404";
+			return "404";
 		}
 		if (count != 0) {
 			int tpp= Config.inst().get(Config.THREADS_PER_PAGE, 5);
@@ -128,7 +115,7 @@ public class BoardController {
 			pagesCount = count / tpp - (count % tpp == 0 ? 1 : 0);
 			
 			if (boardPage > pagesCount)
-				return "redirect:pages/errorPage404";
+				return "404";
 
 			// Get threads
 				try {
@@ -138,7 +125,7 @@ public class BoardController {
 							the = th.entrySet();
 				} catch (NoSuchFieldException e) {
 					Log.get().log(Level.INFO, "BoardController.getBoardIndex() at getThreads() failed: {0}", e);
-					return "redirect:pages/errorPage404";
+					return "404";
 				}
 		}
 		// Prepare pages navigation
@@ -171,7 +158,7 @@ public class BoardController {
 			//check that group is not deleted. Do we need it?
 			Group g = StorageManager.groups.get(boardName);
 			if(g == null || g.isDeleted())
-				return "redirect:pages/errorPage404";
+				return "404";
 			
 			model.put("boardName", boardName);
 			model.put("hostName", Config.inst().get(Config.HOSTNAME, null));

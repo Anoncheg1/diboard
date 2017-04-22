@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 //@Controller
 
 @Configuration
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class}) //, ErrorMvcAutoConfiguration.class show Apache Tomcat version
 @ComponentScan
 public class Application implements Observer{
 	

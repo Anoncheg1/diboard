@@ -87,7 +87,7 @@ TODO:
 For nntpchan:
 ----------
 - make one name for host: web, nntp and in Path header.
-- do ping-pong to maintain stream connection.
+- Fix XOVER and block empty articles.
 
 jar verification:
 ----------
