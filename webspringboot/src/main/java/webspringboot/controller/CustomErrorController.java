@@ -21,7 +21,6 @@ public class CustomErrorController implements ErrorController {
 	
 	@Override
 	public String getErrorPath() {
-		// TODO Auto-generated method stub
 		return PATH;
 	}
 
