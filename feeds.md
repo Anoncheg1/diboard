@@ -17,18 +17,16 @@ host.com|sdg2123.onion|asdasdjlk.i2p|127.0.0.5
 Recomendations:
 ---------
 
-* Be especially carefull with writing peerhost names in peers.conf and groups.conf. If you made mistake in hostnames there is no warning message for it.
 * Do not change id in groups.conf ever. Do not change group name if you have peers.
-* Public list of peers per group/board at the main page. Strongly recommended.
-* Watch for changes of that list at your peers.
+* Do not change hostname ever. You must erase all articles before.
+* Be especially carefull with writing peerhost names in peers.conf and groups.conf. If you made mistake in hostnames there is no warning message for it.
+* Watch for changes of peer list at your peers.
 * You should monitor every group of peers.
 * Do not join to too large list of peers (group/board).
 * If something go wrong in group all that you can do is accept it or disconnect from whole list (group/board).
 * Time at your host should not differ by the perceived user value.
 
 **peers per groups - groups.conf MUST be public**
-
-nntpchan keep open connection without ping-pong. We close idling connections for DDoS protection after dibd.timeout seconds default is 180.
 
 Possible errors/warning in net of peers:
 ------------------------
