@@ -1,0 +1,26 @@
+Priorities:
+1) each node by itself
+2) users connection
+3) users fingerprints
+
+1) includes:
+	1.1 peer-to-peer: tor/i2p + TLS connection
+	1.2 prevent correlation attacks: where it is possible random intervals used.
+	perils:
+	- reading fronted. No protection.
+	- ISP traffic analysis. No protection
+	- compromised connected peer. No protection.
+	- compromised distant peer. For networking groups user source fingerprint may leak without detection.
+
+2) includes:
+	2.1 Tor or I2p
+	2.2 optional HTTPS for more encryption
+	2.3 prevent correlation attacks:
+	TODO:Optional message padding
+	TODO:transfer but delay publication or delay publication at all.
+	
+3) includes:
+	3.1 for overchan: clear message-id and no PATH header,
+		for diboard-groups: hidden message-id
+
+Both the times and the quantities of ciphertext transfer are subject for correlation attacks.

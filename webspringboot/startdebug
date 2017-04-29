@@ -1,1 +1,1 @@
-java -Dserver.port=8070 -jar target/diboard.jar -p 7119 -ae
+java -ea -Dserver.port=8070 -jar target/diboard.jar -p 7119

@@ -77,7 +77,7 @@ public class ThreadController {
 				file = null;
 			
 			if (service.createArticle(null, group, name,
-					subject, message, file) == 0) { //we do not escape html at input
+					subject, message, file) == -1) { //we do not escape html at input
 				errorM = "Thread already exist or another error.";
 			}
 		}
@@ -154,7 +154,7 @@ public class ThreadController {
 					file = null;
 				id = service.createArticle(threadId, group, name,
 						subject, message, file); //we do not escape html at input
-				if (id == 0) {
+				if (id == -1) {
 					errorM = "Replay already exist or another error.";
 				}
 			}

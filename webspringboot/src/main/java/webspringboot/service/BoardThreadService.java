@@ -15,6 +15,10 @@ import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageBackendException;
 import dibd.storage.StorageManager;
 import dibd.storage.article.Article;
+import dibd.storage.article.ArticleFactory;
+import dibd.storage.article.ArticleForPush;
+import dibd.storage.article.ArticleOutput;
+import dibd.storage.article.ArticleWebInput;
 import dibd.storage.web.ShortRefParser;
 import dibd.storage.web.StorageObjectPool;
 import dibd.storage.web.StorageWeb;
@@ -71,7 +75,7 @@ public class BoardThreadService {
 		if(boardId == 0)
 			throw new NoSuchFieldException("Wrong boardName.");
 		
-		Map<ThRLeft<Article>,List<Article>> threads;
+		Map<ThRLeft<ArticleOutput>,List<ArticleOutput>> threads;
 
 		try {
 			threads = db.getThreads(boardId, boardPage, boardName);
@@ -81,17 +85,17 @@ public class BoardThreadService {
 		}
 
 		ret = new LinkedHashMap<ThRLeft<ArticleWeb>,List<ArticleWeb>>();
-		for (Entry<ThRLeft<Article>, List<Article>> entry : threads.entrySet()) {
+		for (Entry<ThRLeft<ArticleOutput>, List<ArticleOutput>> entry : threads.entrySet()) {
 			//value
 			List<ArticleWeb> replays = new ArrayList<ArticleWeb>();
-			for(Article a: entry.getValue()){
+			for(ArticleOutput a: entry.getValue()){
 				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
 
 				replays.add(new ArticleWeb(a, refs, oneMany.Board));
 			}
 			//key
-			ThRLeft<Article> key = entry.getKey();
-			Article thread = key.getThread();
+			ThRLeft<ArticleOutput> key = entry.getKey();
+			ArticleOutput thread = key.getThread();
 			Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, thread.getMessage());
 			ThRLeft<ArticleWeb> threadW = new ThRLeft<ArticleWeb>(new ArticleWeb(thread, refs, oneMany.Board), key.getRLeft()); 
 			ret.put(threadW, replays);
@@ -137,16 +141,16 @@ public class BoardThreadService {
 	 * @param subject
 	 * @param message
 	 * @param file
-	 * @return 0 if already exist
+	 * @return -1 if already exist or any error >0 if success
 	 */
 	public int createArticle(final Integer threadId, Group group, 
 			String name, final String subject, String message, final MultipartFile file) {
 
-		int ret_id = 0; //with id
+		int ret_id = -1; //with id
 		File tmpf = null;
 		try {
 
-			Article art = new Article(threadId, name, subject, ShortRefParser.shortRefParser(db, message), group);
+			
 
 			String ct = null;
 			String fname = null;
@@ -157,17 +161,18 @@ public class BoardThreadService {
 				tmpf = File.createTempFile(fname, "");
 				file.transferTo(tmpf);
 			}
-
-			Article article;
+			ArticleWebInput art = ArticleFactory.crAWebInput(threadId, name, subject, 
+					ShortRefParser.shortRefParser(db, message), group, fname, ct);
+			ArticleForPush article;
 			if(threadId == null)
-				article = db.createThreadWeb(art, tmpf, ct, fname);
+				article = db.createThreadWeb(art, tmpf);
 			else
-				article = db.createReplayWeb(art, tmpf, ct, fname);
+				article = db.createReplayWeb(art, tmpf);
 
 			if (article == null) //exist
-				return 0;
+				return -1;
 			else
-				ret_id = article.getId();
+				ret_id = 3; //ok
 
 			//peering
 			FeedManager.queueForPush(article);
@@ -196,11 +201,11 @@ public class BoardThreadService {
 		try {
 
 			assert(group != null);
-			List<Article> al = db.getOneThread(threadId, group.getName(), 1); //get 1 and 0 status
+			List<ArticleOutput> al = db.getOneThreadWeb(threadId, group.getName()); 
 			if (al.isEmpty())
 				return new ArrayList<ArticleWeb>(0);
 
-			for(Article a: al){
+			for(ArticleOutput a: al){
 				Map<String, WebRef> refs = ShortRefParser.getGlobalRefs(db, a.getMessage());
 				thread.add(new ArticleWeb(a, refs, oneMany.OneThread));
 			}

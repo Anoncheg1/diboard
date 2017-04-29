@@ -9,6 +9,7 @@ import java.util.Map;
 
 import dibd.storage.StorageManager;
 import dibd.storage.article.Article;
+import dibd.storage.article.ArticleOutput;
 import dibd.storage.web.WebRef;
 import org.springframework.web.util.HtmlUtils;
 
@@ -20,6 +21,7 @@ import org.springframework.web.util.HtmlUtils;
  */
 public class ArticleWeb extends Article{
 	
+	// web-fronted data format
 	private static final SimpleDateFormat webdate = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
 	
 	
@@ -38,14 +40,14 @@ public class ArticleWeb extends Article{
 	 * @param article
 	 * @param refs
 	 */
-	public ArticleWeb(Article article, Map <String, WebRef> refs, oneMany om) {
+	public ArticleWeb(ArticleOutput article, Map <String, WebRef> refs, oneMany om) {
 		super(article);
-		
+
 		this.om = om;
 		
 		if(super.a.a_name == null || super.a.a_name.equals(""))
 			super.a.a_name = "Anonymous"; //we add it only for output
-		
+
 		if (super.a.subject == null)
 			super.a.subject = "";
 
@@ -54,7 +56,7 @@ public class ArticleWeb extends Article{
 		else{
 			super.a.message = HtmlUtils.htmlEscape(super.a.message); // IMPORTANT for security
 			//System.out.println(HtmlUtils.htmlEscape("<as.ggd@ho-st.com>"));
-			
+
 			for(Map.Entry<String, WebRef> ref : refs.entrySet()){
 				WebRef wr = (WebRef) ref.getValue();
 

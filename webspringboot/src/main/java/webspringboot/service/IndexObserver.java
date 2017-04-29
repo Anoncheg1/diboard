@@ -24,7 +24,7 @@ import dibd.config.Config;
 import dibd.storage.GroupsProvider.Group;
 import dibd.storage.StorageManager;
 import dibd.storage.AttachmentProvider.Atype;
-import dibd.storage.article.Article;
+import dibd.storage.article.ArticleForOverview;
 import dibd.util.io.Resource;
 
 import com.samskivert.mustache.Mustache;
@@ -87,7 +87,7 @@ public class IndexObserver implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		@SuppressWarnings("unchecked")
-		List<Article> arts = (List<Article>) arg;
+		List<ArticleForOverview> arts = (List<ArticleForOverview>) arg;
 		Map<String, Object> model = new HashMap<>();
 		//compile
 		Template tmpl = Mustache.compiler().compile(must);
@@ -97,7 +97,7 @@ public class IndexObserver implements Observer {
 		
 		//statistic
 		Set<String> lastgr = new LinkedHashSet<>(); //unique groups
-		for( Article a: arts)
+		for( ArticleForOverview a: arts)
 			lastgr.add(a.getGroupName());
 		
 		class groupNew{ //group with images or messages
@@ -115,7 +115,7 @@ public class IndexObserver implements Observer {
 		
 		for (String gr: lastgr){
 			List<String> articles = new ArrayList<>(); //cell 
-			for( Article a: arts){
+			for( ArticleForOverview a: arts){
 				String gname = a.getGroupName();
 				if ( articles.size() < 4 && gname.equals(gr)){
 					

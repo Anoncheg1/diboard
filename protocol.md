@@ -29,28 +29,10 @@ Parameters
 	num is required number of threads with last date
 
 
-Web-fronted message filtrating
------------------
-Suggestion how to filter empty articles:
-If Message is empty there is must be Subject and Attachment.
-If Message is not empty: for thread there is must Subject or Attachment,
-for replay Message is enough.
-
-
-new replay:
-```
-1 message.length() != 0
-2 subject.length() != 0
-3 file.getSize() != 0
-( 1 or (2 and 3) ) or (2 and 3)
-( 1 or (2 and 3) )
--( 1 and (2 or 3) )    negative form for "== 0"
-```
-
-new thread:
-```
-1 message.length() == 0
-2 subject.length() == 0
-3 file.getSize() == 0
-( 1 AND (2 OR 3) ) OR (2 AND 3) 
-```
+RFC 3977 Violations
+-----------
+- Article headers FROM and SUBJECT are optional
+- HEAD and BODY commands not implemented
+- ARTICLE without argument (current article) not implemented
+- STAT, NEXT, PREV not implemented
+- XOVER multi-line output: ```Index number\t\t\tDate\tMessage-ID\t[For thread - thread Message-id, for replay it is empty here]```

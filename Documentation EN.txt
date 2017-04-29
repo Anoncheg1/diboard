@@ -1,0 +1,41 @@
+1.1 Filter empty articles at Web-frontend
+
+The following rules are applying:
+If Message is empty there is must be Subject and Attachment.
+If Message is not empty: for thread there is must Subject or Attachment,
+for replay Message is enough.
+
+new replay:
+
+1 message.length() != 0
+2 subject.length() != 0
+3 file.getSize() != 0
+( 1 or (2 and 3) ) or (2 and 3)
+( 1 or (2 and 3) )
+-( 1 and (2 or 3) )    negative form for "== 0"
+
+new thread:
+
+1 message.length() == 0
+2 subject.length() == 0
+3 file.getSize() == 0
+( 1 AND (2 OR 3) ) OR (2 AND 3) 
+
+1.2 Message source fingerprint problem and flood protection
+
+If servers has names or any identities then one of following condition required:
+1 many small nodes
+2 one-four users at one of the server
+
+If server has no identity it is impossible to prevent such network from growing and
+protect against flood but there is no source fingerprint problem.
+
+Nntpchan software has no restritions on naming except one: DomainKeys Identified Mail (DKIM)
+which used to protect against flood.
+
+Nntpchan network has many signed small nodes with one-four users.
+Users will settle in most popular server in attemt to hide article source fingerprint.
+Such centralization is bad for whole network.
+
+To solve this problem diboard uses two modes at same time: one for mutual network with nntpchan software
+and another for separate networks of groups.
