@@ -8,7 +8,7 @@ diboard v1.0.8 Decentralized ImageBoard just like [nntpchan](https://github.com/
 - main goal of project is a quality of code
 - the least possible amount of third-party libraries
 - more accurate with rfc
-- philosophy 
+- philosophy: closed groups of trusted servers to protect against flood and user fingerprint leaks.
 ![peering philosophy](https://github.com/Anoncheg1/diboard/blob/master/peering%20philosophy.png "peering philosophy")
 
 Structure:
@@ -73,10 +73,7 @@ Features:
 Knews issues:
 ----------
 - Impossible to chage HTML templates without recompilation.
-- HEAD and BODY NNTP commands do not read NNTPcache.
-- For TLS: only DNS names in AltNames Subject field supported.
 - It is possible to fake host in message-id and Path.(See "missing threads" in FullDocumentation)
-- It is possible to flood/spam from peers, that is why we need networking groups.
 - HTTP proxy not supported.
 
 TODO:
