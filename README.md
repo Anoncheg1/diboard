@@ -73,7 +73,6 @@ Features:
 Knews issues:
 ----------
 - Impossible to chage HTML templates without recompilation.
-- It is possible to fake host in message-id and Path.(See "missing threads" in FullDocumentation)
 - HTTP proxy not supported.
 
 TODO:

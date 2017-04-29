@@ -29,13 +29,17 @@ Recomendations:
 **peers per groups - groups.conf MUST be public**
 
 Possible errors/warning in net of peers:
-------------------------
+-------------
 * new peer in group
 * if nntpchan is peer there may be replays without threads in XOVER, wrong formatted articles, etc.
 * "WARNING Can not create thumbnail" is normal. Ignore it.
 * hostname/groupname was changed inside peer
 * spoofing and spamming
 * max replays per thread have different limit
+
+You must know
+--------
+- It is possible to fake host in message-id and Path when you receive missing thread.(See "missing threads" in FullDocumentation)
 
 Peering with TLS
 ----------
