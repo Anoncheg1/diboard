@@ -82,7 +82,6 @@ TODO:
 
 For nntpchan:
 ----------
-- make one name for host: web, nntp and in Path header.
 - Fix XOVER and block empty articles.
 
 jar verification:
