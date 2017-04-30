@@ -6,7 +6,7 @@ Message-ID
 -----------
 Only minimal character set allowed, anything else will be rejected:
 
-```<[\\w\\.$]+@[\\w.-]+> - < 0-9, A-Z, a-z, dot, $ @ 0-1, A-Z, a-z, -, dot >```
+```<[\\w.$]+@[\\w.-]+> - < 0-9, A-Z, a-z, dot, $ @ 0-1, A-Z, a-z, -, dot >```
 
 I have doubts about $ but I hope it will not harm.
 
