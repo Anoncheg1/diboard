@@ -1,5 +1,6 @@
 Thread - is an article with id == thread_id.
 
+@Depricated
 Local uncached article - is an article with: message_id_host equal to Config.inst().get(Config.HOSTNAME, null)
 
 #####  For large attachment  #####
@@ -22,16 +23,22 @@ when article:
 return only if status = 0
 
 #####  nntpchan short links  #####
-when we receive message IAHVE, TAKETHIS with >sha1
+Nntpchan software uses >>sha1 hash of message-id for short links in message body.
+Diboard conflict with it and uses <message-id> for short links in message body.
+When we receive message IAHVE, TAKETHIS with >>sha1 (nntpchan format)
 1) In ReceivingService just before to call JDBC and add to database we call:
 message = ShortRefParser.nntpchanLinks(message, group)
-it change all nntpchan links to global, except (>>sha1) format.
+it change all nntpchan links to global, except "(>>sha1)" format.
 2) when we push local articles from base
-in Article.buildNNTPMessage we call
+in Article.buildNNTPMessage we call:
+dibd.storage.web.ShortRefParser.addToGlobalNntpchanLinks(message)
+it replace in message:
+before:
+message-id
 
-it replace global links message-id to message-id(>>sha1)
-
-
+after:
+message-id
+(>>sha1)
 
 ###### erase group
 1) SQL: delete from thread where group_id = ?;

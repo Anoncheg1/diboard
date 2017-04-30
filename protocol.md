@@ -6,7 +6,7 @@ Message-ID
 -----------
 Only minimal character set allowed, anything else will be rejected:
 
-```<[\w.)]+@[\w.-]+> - < 0-9, A-Z, a-z, dot, $ @ 0-1, A-Z, a-z, -, dot >```
+```<[\\w\\.$]+@[\\w.-]+> - < 0-9, A-Z, a-z, dot, $ @ 0-1, A-Z, a-z, -, dot >```
 
 I have doubts about $ but I hope it will not harm.
 
@@ -35,4 +35,4 @@ RFC 3977 Violations
 - HEAD and BODY commands not implemented
 - ARTICLE without argument (current article) not implemented
 - STAT, NEXT, PREV not implemented
-- XOVER multi-line output: ```Index number\t\t\tDate\tMessage-ID\t[For thread - thread Message-id, for replay it is empty here]```
+- XOVER multi-line output: ```Index_number\t\t\tDate\tMessage-ID\t[For thread - thread Message-id, for replay it is empty here]```
