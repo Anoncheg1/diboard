@@ -42,8 +42,10 @@ public class ImageController {
 				OutputStream or = null;
 			    try {
 			    	if (type.equals(Atype.img) && 
-			    			! StorageManager.attachments.getPath(boardName, fileName, Atype.thm).exists()){ //readable must be readed
+			    			(! StorageManager.attachments.getPath(boardName, fileName, Atype.thm).exists()
+			    					|| ! fileName.contains("."))){
 			    		String mimetype = Files.probeContentType(ofile.toPath());
+			    		//readable must be read
 			    		if (mimetype.startsWith("text") || mimetype.contains("php") || mimetype.contains("javascript") || mimetype.contains("xml"))
 			    			resp.setContentType("text/plain"); //should be safe if it is not.
 			    		else if (mimetype.startsWith("image"))

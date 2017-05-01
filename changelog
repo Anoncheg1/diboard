@@ -1,5 +1,6 @@
 v1.0.8
-- base64 shameful bug was fixed.
+- base64 serious bug was fixed
+- thread deletion leaks fixed
 - for commands TAKETHIS IHAVE crossing fixed
 - files stored without extension for better content detection. Use cd overchan.test/img/ && ls | sed 's#\(\([0-9]*\)\..*\)#mv \1 \2#g' |sh ; cd ../..
 - frontend: captcha reload to separate clear page for low bandwidth users.
