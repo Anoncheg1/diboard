@@ -108,4 +108,8 @@ public class ArticleWeb extends Article{
 			return "captcha-thread-"+String.format("%X", super.getThread_id())+"?id="+getId_hex();
 	}
 	
+	public String getA_name() {
+		return a.a_name.replaceFirst("<.*", "").trim();
+	}
+	
 }

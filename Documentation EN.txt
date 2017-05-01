@@ -41,5 +41,19 @@ To solve this problems diboard uses two modes at same time:
 one for mutual network with nntpchan software
 and another for separate networks of groups.
 
+In mutual network or network with SFP problem diboard software behave as follows:
+- full compatibility with nntpchan software include: read open, ...
+- message-id will be faked to most popular node
+- Path will be optional
+- no restrictions on path and message-id-host for incoming messages
+- no flood protection, no DRIM
+- the goal is to hide server identity as much as possible
+
+In networking groups the behave is as follows:
+- full compatibility with nntpchan, except read open.
+- restrictions on Path and message-id-host
+- message-id is not faked
+- all servers in groups must hide message-id at web-frontend
+
 1.3 Networking groups philosophy
 
