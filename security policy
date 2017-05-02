@@ -1,16 +1,19 @@
 Priorities:
 1) each node by itself
-2) users connection
-3) users fingerprints
+2) user connection
+3) user fingerprints
 
 1) includes:
 	1.1 peer-to-peer: tor/i2p + TLS connection
-	1.2 prevent correlation attacks: where it is possible random intervals used.
+	1.2 prevent correlation attacks(see 1):
 	perils:
-	- reading fronted. No protection.
-	- ISP traffic analysis. No protection
+	- r/w fronted. No protection.
+	- ISP traffic analysis.
+	Diboard uses random delays and data quantity
+	where it don't slow down network and violate protocol.
+	You may try to hide traffic in encrypted flow of tor or i2p.
 	- compromised connected peer. No protection.
-	- compromised distant peer. For networking groups user source fingerprint may leak without detection.
+	- compromised distant peer.
 
 2) includes:
 	2.1 Tor or I2p
@@ -21,6 +24,10 @@ Priorities:
 	
 3) includes:
 	3.1 for overchan: clear message-id and no PATH header,
-		for diboard-groups: hidden message-id
+		for diboard-groups: hidden message-id at web-frontends of the groups.
+	Knew issue:
+	For networking groups user source fingerprint may leak at compromised server without detection.
 
-Both the times and the quantities of ciphertext transfer are subject for correlation attacks.
+
+	
+[1] Both the times and the quantities of ciphertext transfer are subject for correlation attacks.
