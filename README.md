@@ -69,6 +69,7 @@ Features:
 - Only images supported for now. One attachment per post.
 - SOCKS proxy connection for Tor OR i2p working.
 - Flexible control of used disk space and used resources.
+- Abstract API for implementing any JVM supported web-frontend (with thread pool or with dynamically spawn threads).
 
 Knews issues:
 ----------
