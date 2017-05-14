@@ -187,7 +187,7 @@ public class ThreadController {
 		List<ArticleWeb> t  = service.getOneThread(threadId, group);
 		if (t.isEmpty()){
 			Log.get().log(Level.INFO, "No such thread: {0} of group {1}", new Object[]{threadId, group.getName()});
-			return "redirect:pages/errorPage404";
+			return "404";
 		}
 		ArticleWeb tmain = t.remove(0);
 
